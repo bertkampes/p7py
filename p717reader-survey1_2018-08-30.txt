@@ -1,0 +1,120 @@
+==================================================================
+This is a human readable output report for an IOGP p717 file
+Created by p717reader.py on 2018-08-30 16:16:50.144101
+input file: data1-small-.csv.2018-08-30.p717 SURVEYREF: 1
+p717reader spec draft v0.8 2017-12-25 provided AS-IS for demonstration purposes
+==================================================================
+
+------------------------------------------------------------------
+PROJECT/:
+------------------------------------------------------------------
+Company:                   unknown
+Project Name:              Pegasus
+Structure:                 Pad A
+Well:                      207/29-A6                          UWI:  207/29-A6
+Wellbore:                  207/29-2Z                          UWBI: 207/29-2Z
+Survey name:               Final Run
+Survey type:               Gyro
+
+RIG/WORKOVER:              Unknown Rig
+TVD Reference (ZDP):       KB 275.5 (ftUS)) above VRS
+MD Reference (ZDP):        KB 275.5 (ftUS)) above VRS
+North Reference:           AZ_GRID
+
+PROJECT CRS:                    MSL depth (ft) [8051]
+
+
+------------------------------------------------------------------
+STRUCTURE/SITE: Pad A
+------------------------------------------------------------------
+Coordinates and Accuracy of SRP:
+
+WOBJ 1: Origin Pad-A 
+----------------------------------------
+  CRS A name:    unknown CRS A
+  CRS_A_coords:  ('425353.84', '6623785.69', '118.40')
+  CRS B name:    self.CRS_B_name
+  CRS_B_coords:  ('59.7438428', '1.6719808')
+  CRS C name:    unknown CRS C
+  CRS_C_coords:  ('59.7432856', '1.6703167')
+  hor_radial_uncertainty: 1.4 (self.hor_uncertainty_unit)
+  hor_radial_confidence:  1-sigma
+
+
+------------------------------------------------------------------
+WELL/SLOT: 207/29-A6
+------------------------------------------------------------------
+Coordinates and Accuracy of WRP:
+
+WOBJ 2: RefPt Well 1 on Pad A
+----------------------------------------
+  CRS A name:    unknown CRS A
+  CRS_A_coords:  ('425353.84', '6623785.69', '118.40')
+  CRS B name:    self.CRS_B_name
+  CRS_B_coords:  ('59.7438428', '1.6719808')
+  CRS C name:    unknown CRS C
+  CRS_C_coords:  ('59.7432856', '1.6703167')
+  hor_radial_uncertainty: 1.4 (self.hor_uncertainty_unit)
+  hor_radial_confidence:  1-sigma
+
+
+------------------------------------------------------------------
+WELLBORE: 207/29-2Z
+------------------------------------------------------------------
+Sidetrack?                 TO DO ********************
+
+GEOPHYSICAL REFERENCE VALUES:
+-----------------------------
+Strategy:                     Single Point Supplied for Survey by Operator
+  Magnetic model name:          IGRF1972
+  Magnetic model year:          1972
+  Reference date:               1972:06:28
+  to do ... add declination, dip, btotal or so applied... 
+Gravity model:          Single Point Supplied for Survey by Operator
+
+
+------------------------------------------------------------------
+SURVEY: Final Run
+------------------------------------------------------------------
+Survey date:               2012:07:01
+Survey MD start:           1100.0
+Survey MD end:             2150.0
+
+Survey Calculation Method: looking for min. curvature somewhere...
+Survey Calculation Method: LMP
+
+
+-------------------
+SURVEY PROGRAM + ERROR MODEL:
+-------------------
+to do: print error model fromMD to MD, or show/get it from the poslog.
+
+
+-------------------
+SURVEY POSITION LOG
+-------------------
+Project CRS: unkn unkn
+
+MD       INC   AZ     n       e       d        Northing   Easting    Depth   Latitude    Longitude   
+MDunit   deg   deg    MDunit  MDunit  MDunit   projCRSunit projCRSunit vertCRSunit deg         deg         
+------------------------------------------------------------------------
+  173.09  2.19 292.15    3.74  -12.63   173.00 6623785.69  425353.84  117.00  59.7438428    1.6719808 D Other
+  200.00  2.19 292.15    4.27  -13.94   209.88 6623786.22  425352.53  153.88  59.7438472    1.6719572 D Planned
+  300.00  5.00 300.00    6.88  -18.93   299.70 6623788.83  425347.55  243.70  59.7438697    1.6718678 D Planned
+  780.77 45.21  62.97  100.45  123.34   734.32 6623882.37  425489.77  678.32  59.7447350    1.6743639 D Planned
+ 4294.98 45.21  62.97 1234.00 2345.00  3210.00 6625015.54  427710.69 3154.00  59.7553000    1.7134742 D Planned
+ 4380.15 45.21  62.97 1261.47 2398.00  3270.00 6625043.00  427764.51 3214.00  59.7555558    1.7144222 D Planned
+
+
+----------------------------------------------------------------------
+Casing Points
+   DESIGN - lookup casing points from point table in p717.  There is a record that allows writing this...
+
+Formations
+   - Formations lookup from point table in p717
+
+----------------------------------------------------------------------
+
+SURVEY RAW DATA
+
+

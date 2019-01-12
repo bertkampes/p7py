@@ -1,0 +1,662 @@
+16:16:49: INFO    : -----------------------------------------------------------------
+16:16:49: INFO    : p717reader v1.0 2018-08-30 16:16:49.910101
+16:16:49: INFO    : input file:    "data1-small-.csv.2018-08-30.p717"
+16:16:49: INFO    : output folder: "."
+16:16:49: INFO    : log file:      "p717reader.log"
+16:16:49: INFO    : -----------------------------------------------------------------
+16:16:49: INFO    : 
+16:16:49: DEBUG   : File extension: .p717
+16:16:49: INFO    : 
+16:16:49: INFO    : First pass over file to get main object entities...
+16:16:49: DEBUG   : ROW   1: ['==================================================================']
+16:16:49: DEBUG   : ROW   2: ['This p717 file converted from p7200 input as test.']
+16:16:49: DEBUG   : ROW   3: ['Created by p717writer.py on 2018-08-30 13:48:26.800074']
+16:16:49: DEBUG   : ROW   4: ['input file: data1-small-.csv']
+16:16:49: DEBUG   : ROW   5: ['p717writer based on format specification draft v1.0 2018-07-15 provided AS-IS for demonstration purposes only!']
+16:16:49: DEBUG   : ROW   6: ['==================================================================']
+16:16:49: DEBUG   : ROW   7: []
+16:16:49: DEBUG   : ROW   8: ['IOGP', 'IOGP P7', '7', '1.0', '1', '2018:08:30', '13:48:26', 'data1-small-.csv.2018-08-30.p717', 'p717 sample writer']
+16:16:49: DEBUG   : Found record ('IOGP',)
+16:16:49: DEBUG   : check_record_vs_spec: ['IOGP', 'IOGP P7', '7', '1.0', '1', '2018:08:30', '13:48:26', 'data1-small-.csv.2018-08-30.p717', 'p717 sample writer']
+16:16:49: DEBUG   : Record fmt: {},{},{},{:f},{:d},{},{},{},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 9 <> 9
+16:16:49: DEBUG   : Found IOGP File Identification
+16:16:49: DEBUG   : PROJECT CONSTRUCTOR: ['IOGP', 'IOGP P7', '7', '1.0', '1']
+16:16:49: DEBUG   : IOGP File ID ROW: ['IOGP', 'IOGP P7', '7', '1.0', '1']
+16:16:49: DEBUG   : ROW   9: ['HC', '0', '1', '1', 'Project Name                                      ', 'Pegasus', 'Pegasus Field', 'Texas', 'United States', 'USA', 'NAD27 / Texas Central + NGVD29 depth (ftUS)', '4', 'ftUS', 'ftUS)']
+16:16:49: DEBUG   : ROW  10: ['HC', '0', '2', '1', 'Structure Definition                              ', '1', 'Pad A', 'SRP', '1', 'Centre Slot A1', 'Onshore']
+16:16:49: DEBUG   : Found record ('HC', '0', '2', '1', 'Structure Definition')
+16:16:49: DEBUG   : Descriptor OK: "Structure Definition"
+16:16:49: DEBUG   : check_record_vs_spec: ['HC', '0', '2', '1', 'Structure Definition                              ', '1', 'Pad A', 'SRP', '1', 'Centre Slot A1', 'Onshore']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{},{:d},{},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 11 <> 11
+16:16:49: DEBUG   : Found Structure Definition STRUCTUREREF:   1
+16:16:49: DEBUG   : STRUCTURE CONSTRUCTOR: ['HC', '0', '2', '1', 'Structure Definition                              ']
+16:16:49: DEBUG   : ROW  11: ['HC', '0', '3', '1', 'Well Definition                                   ', '1', '1', 'WRP', '2', '207/29-A6', '207/29-A6', 'DTI', '', '', '', 'As-drilled', 'UKCS Block 207/29', '2012:05:15']
+16:16:49: DEBUG   : Found record ('HC', '0', '3', '1', 'Well Definition')
+16:16:49: DEBUG   : Descriptor OK: "Well Definition"
+16:16:49: DEBUG   : check_record_vs_spec: ['HC', '0', '3', '1', 'Well Definition                                   ', '1', '1', 'WRP', '2', '207/29-A6', '207/29-A6', 'DTI', '', '', '', 'As-drilled', 'UKCS Block 207/29', '2012:05:15']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{},{:d},{},{},{},{},{},{},{},{},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 18 <> 18
+16:16:49: DEBUG   : Found well identification WELLREF:         1
+16:16:49: DEBUG   : WELL CONSTRUCTOR: ['HC', '0', '3', '1', 'Well Definition                                   ']
+16:16:49: DEBUG   : ROW  12: ['HC', '0', '4', '1', 'Wellbore Definition                               ', '1', '1', '207/29-2Z', '207/29-2Z', 'OGA', '', '', '', 'Existing', '207/29', '', 'ST=Y', '1750.5', '1', '2012:06:01']
+16:16:49: DEBUG   : Found record ('HC', '0', '4', '1', 'Wellbore Definition')
+16:16:49: DEBUG   : Descriptor OK: "Wellbore Definition"
+16:16:49: DEBUG   : check_record_vs_spec: ['HC', '0', '4', '1', 'Wellbore Definition                               ', '1', '1', '207/29-2Z', '207/29-2Z', 'OGA', '', '', '', 'Existing', '207/29', '', 'ST=Y', '1750.5', '1', '2012:06:01']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{},{},{},{},{},{},{},{},{},{},{BLANK:.1f},{BLANK:d},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 20 <> 20
+16:16:49: DEBUG   : Found Wellbore Identification WELLBOREREF: 1
+16:16:49: DEBUG   : WELLBORE CONSTRUCTOR: ['HC', '0', '4', '1', 'Wellbore Definition                               ']
+16:16:49: DEBUG   : ROW  13: ['HC', '0', '5', '1', 'ZDP Rig/Workover Definition                       ', '1', 'Unknown Rig', 'KB', '275.5', '0.5', '8.3', '2011:01:01']
+16:16:49: DEBUG   : Found record ('HC', '0', '5', '1', 'ZDP Rig/Workover Definition')
+16:16:49: DEBUG   : Descriptor OK: "ZDP Rig/Workover Definition"
+16:16:49: DEBUG   : check_record_vs_spec: ['HC', '0', '5', '1', 'ZDP Rig/Workover Definition                       ', '1', 'Unknown Rig', 'KB', '275.5', '0.5', '8.3', '2011:01:01']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{},{:.1f},{BLANK:.1f},{BLANK:.1f},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:49: DEBUG   : Found Rig Details ZDPREF:                  1
+16:16:49: DEBUG   : RIG CONSTRUCTOR: ['HC', '0', '5', '1', 'ZDP Rig/Workover Definition                       ']
+16:16:49: DEBUG   : ROW  14: ['HC', '0', '6', '1', 'Survey Definition                                 ', '1', '1', '1', 'Final Run', 'Gyro', '2', 'Open Hole', '7-5/8', 'In', '1100.00', '2150.00', 'ft', 'Grid North', '-99999.000', '2012:07:01', '2012:07:02']
+16:16:49: DEBUG   : Found record ('HC', '0', '6', '1', 'Survey Definition')
+16:16:49: DEBUG   : Descriptor OK: "Survey Definition"
+16:16:49: DEBUG   : check_record_vs_spec: ['HC', '0', '6', '1', 'Survey Definition                                 ', '1', '1', '1', 'Final Run', 'Gyro', '2', 'Open Hole', '7-5/8', 'In', '1100.00', '2150.00', 'ft', 'Grid North', '-99999.000', '2012:07:01', '2012:07:02']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{:d},{},{},{BLANK:d},{},{},{},{:.2f},{:.2f},{},{},{BLANK:.3f},{},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 21 <> 21
+16:16:49: DEBUG   : Found Survey Definition SURVEYREF:         1
+16:16:49: DEBUG   : SURVEY CONSTRUCTOR: ['HC', '0', '6', '1', 'Survey Definition                                 ']
+16:16:49: DEBUG   : ROW  15: []
+16:16:49: DEBUG   : ROW  16: ['HC', '0', '7', '1', 'Operator/Survey Contractor (Acqn)                 ', '1', 'Highland Oil', 'Tain Drilling', 'TD101', '']
+16:16:49: DEBUG   : ROW  17: ['HC', '0', '7', '2', 'Operator/Survey Contractor (Proc)                 ', '1', 'Lowland Exploration and Production', 'Directional Services Inc', 'DS501', '1994:04:15']
+16:16:49: DEBUG   : ROW  18: []
+16:16:49: DEBUG   : ROW  19: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '1', '4326', 'WGS 84', '8.5', '2014:06:27', 'EPSG', 'Global CRS for well object position records']
+16:16:49: DEBUG   : Found record ('HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source')
+16:16:49: DEBUG   : Descriptor OK: "CRS Number/EPSG Code/Name/Source"
+16:16:49: DEBUG   : check_record_vs_spec: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '1', '4326', 'WGS 84', '8.5', '2014:06:27', 'EPSG', 'Global CRS for well object position records']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:49: DEBUG   : Found CRSREF:                              1
+16:16:49: DEBUG   : CRS CONSTRUCTOR: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ']
+16:16:49: DEBUG   : ROW  20: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '2', '4230', 'ED50', '8.5', '2014:06:27', 'EPSG', 'Used for Geographical coordinates in PosLog']
+16:16:49: DEBUG   : Found record ('HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source')
+16:16:49: DEBUG   : Descriptor OK: "CRS Number/EPSG Code/Name/Source"
+16:16:49: DEBUG   : check_record_vs_spec: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '2', '4230', 'ED50', '8.5', '2014:06:27', 'EPSG', 'Used for Geographical coordinates in PosLog']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:49: DEBUG   : Found CRSREF:                              2
+16:16:49: DEBUG   : CRS CONSTRUCTOR: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ']
+16:16:49: DEBUG   : ROW  21: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '3', '23031', 'ED50 / UTM zone 31N', '8.5', '2014:06:27', 'EPSG', 'Used for Structure and Displacements Origin CRS']
+16:16:49: DEBUG   : Found record ('HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source')
+16:16:49: DEBUG   : Descriptor OK: "CRS Number/EPSG Code/Name/Source"
+16:16:49: DEBUG   : check_record_vs_spec: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '3', '23031', 'ED50 / UTM zone 31N', '8.5', '2014:06:27', 'EPSG', 'Used for Structure and Displacements Origin CRS']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:49: DEBUG   : Found CRSREF:                              3
+16:16:49: DEBUG   : CRS CONSTRUCTOR: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ']
+16:16:49: DEBUG   : ROW  22: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '4', '8051', 'MSL depth (ft)', '', '', '', 'Used for Water Depth and TVD below VRS']
+16:16:49: DEBUG   : Found record ('HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source')
+16:16:49: DEBUG   : Descriptor OK: "CRS Number/EPSG Code/Name/Source"
+16:16:49: DEBUG   : check_record_vs_spec: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '4', '8051', 'MSL depth (ft)', '', '', '', 'Used for Water Depth and TVD below VRS']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:49: DEBUG   : Found CRSREF:                              4
+16:16:49: DEBUG   : CRS CONSTRUCTOR: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ']
+16:16:49: DEBUG   : ROW  23: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '5', '-999', 'ED50 / UTM zone 31N + MSL depth (ft)', '', '', '', 'Used for Compound CRS for Projected + TVD below VRS coordinates in PosLog and WRP']
+16:16:49: DEBUG   : Found record ('HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source')
+16:16:49: DEBUG   : Descriptor OK: "CRS Number/EPSG Code/Name/Source"
+16:16:49: DEBUG   : check_record_vs_spec: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '5', '-999', 'ED50 / UTM zone 31N + MSL depth (ft)', '', '', '', 'Used for Compound CRS for Projected + TVD below VRS coordinates in PosLog and WRP']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:49: DEBUG   : Found CRSREF:                              5
+16:16:49: DEBUG   : CRS CONSTRUCTOR: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ']
+16:16:49: DEBUG   : ROW  24: []
+16:16:49: DEBUG   : ROW  25: ['CC', '0', '0', '0', 'Explicit CRS definition records follow for each CRS not in EPSG database']
+16:16:49: DEBUG   : ROW  26: ['HC', '1', '6', '1', 'Coordinate System Axis 1                          ', '3', '1', '1', 'Easting', 'east', 'E', '1', 'metre']
+16:16:49: DEBUG   : ROW  27: ['HC', '1', '6', '1', 'Coordinate System Axis 2                          ', '3', '2', '2', 'Northing', 'north', 'N', '1', 'metre']
+16:16:49: DEBUG   : ROW  28: ['HC', '1', '6', '1', 'Coordinate System Axis 1                          ', '4', '1', '214', 'Depth', 'down', 'D', '15', 'foot']
+16:16:49: DEBUG   : ROW  29: ['HC', '1', '4', '0', 'CRS Number/EPSG Code/Type/Name                    ', '5', '-999', '7', 'compound', 'ED50 / UTM zone 31N + MSL depth (ft)']
+16:16:49: DEBUG   : ROW  30: ['HC', '1', '4', '1', 'Compound Horizontal CRS                           ', '5', '3', '7', 'ED50 / UTM zone 31N']
+16:16:49: DEBUG   : ROW  31: ['HC', '1', '4', '2', 'Compound Vertical CRS                             ', '5', '4', '7', 'MSL depth (ft)']
+16:16:49: DEBUG   : ROW  32: []
+16:16:49: DEBUG   : ROW  33: ['HC', '1', '7', '0', 'Transformation Number/EPSG Code/Name/Source       ', '1', '1311', 'ED50 to WGS 84 (18)', '8.5', '2014:06:27', 'EPSG', '']
+16:16:49: DEBUG   : Found record ('HC', '1', '7', '0', 'Transformation Number/EPSG Code/Name/Source')
+16:16:49: DEBUG   : Descriptor OK: "Transformation Number/EPSG Code/Name/Source"
+16:16:49: DEBUG   : check_record_vs_spec: ['HC', '1', '7', '0', 'Transformation Number/EPSG Code/Name/Source       ', '1', '1311', 'ED50 to WGS 84 (18)', '8.5', '2014:06:27', 'EPSG', '']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:49: DEBUG   : Found COTRANSREF:                          1
+16:16:49: DEBUG   : CT CONSTRUCTOR: ['HC', '1', '7', '0', 'Transformation Number/EPSG Code/Name/Source       ']
+16:16:49: DEBUG   : ROW  34: []
+16:16:49: DEBUG   : ROW  35: ['CC', '0', '0', '0', 'The P7-Specific header records follow']
+16:16:49: DEBUG   : ROW  36: ['H7', '0', '0', '0', 'File_Contents_Description                         ', 'Definitive survey of 207/29-1Z wellbore from 2001', '']
+16:16:49: DEBUG   : ROW  37: ['H7', '0', '1', '0', 'File Processing_Details                           ', 'Reformatted to P7/17 format by Well Data Processors INC']
+16:16:49: DEBUG   : ROW  38: ['H7', '1', '0', '0', 'Structure Details                                 ', '1', 'Top of template', '192.0', '8021.4', '2011:06:21', '0', 'True North', '30.207']
+16:16:49: DEBUG   : ROW  39: ['H7', '1', '1', '0', 'Well Details                                      ', '1', 'Centre slot A1', 'Template installation report', 'A1', '32.000000', '22', ' 15.00', '10.00']
+16:16:49: DEBUG   : ROW  40: ['H7', '1', '4', '0', 'Survey Details                                    ', '1', ' 1', '1', 'MD-Drillpipe', '1', 'Indicated Depth', ' 1', ' 8', 'AZ_GRID', '3', 'Calculated from AZ_MAGN', ' 1', '2.151', '-1.12', '35342.0', ' 1972:06:28', ' 1', '1.500', '9.80739', ' 1', '1']
+16:16:49: DEBUG   : ROW  41: ['H7', '1', '4', '1', 'Survey Tie Point Details                          ', '1', '2015.00', '-2.50', '1.30', '2008.70']
+16:16:49: DEBUG   : ROW  42: []
+16:16:49: DEBUG   : ROW  43: ['H7', '3', '0', '0', 'Measurement Tool Information                      ', '2', 'High-Speed Gyro', 'HSG', '2', 'Gyro-Tools Inc', 'unknown serial number']
+16:16:49: DEBUG   : ROW  44: ['H7', '3', '0', '1', 'Data Retrieval                                    ', '2', '1', 'Stored in tool', '-999', '']
+16:16:49: DEBUG   : ROW  45: ['H7', '3', '0', '1', 'Measurement Trigger                               ', '2', '2', 'some text', '-999', '']
+16:16:49: DEBUG   : ROW  46: []
+16:16:49: DEBUG   : ROW  47: ['CC', '0', '0', '0', 'Position Objects follow']
+16:16:49: DEBUG   : ROW  48: ['H7', '4', '0', '0', 'Position Object Definition                        ', '1', 'Origin Pad A', '1', 'Structure Reference Point', '', '-999', '-99999.00']
+16:16:49: DEBUG   : Found record ('H7', '4', '0', '0', 'Position Object Definition')
+16:16:49: DEBUG   : Descriptor OK: "Position Object Definition"
+16:16:49: DEBUG   : check_record_vs_spec: ['H7', '4', '0', '0', 'Position Object Definition                        ', '1', 'Origin Pad A', '1', 'Structure Reference Point', '', '-999', '-99999.00']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{:d},{},{},{BLANK:d},{BLANK:.2f}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:49: DEBUG   : Found Well Object WOBJREF:                 1
+16:16:49: DEBUG   : WOBJ CONSTRUCTOR: ['H7', '4', '0', '0', 'Position Object Definition                        ']
+16:16:49: DEBUG   : ROW  49: ['H7', '4', '0', '0', 'Position Object Definition                        ', '2', 'Conductor 210/16A-1', '2', 'Well Reference Point', 'on Pad A', '1', '50.00']
+16:16:49: DEBUG   : Found record ('H7', '4', '0', '0', 'Position Object Definition')
+16:16:49: DEBUG   : Descriptor OK: "Position Object Definition"
+16:16:49: DEBUG   : check_record_vs_spec: ['H7', '4', '0', '0', 'Position Object Definition                        ', '2', 'Conductor 210/16A-1', '2', 'Well Reference Point', 'on Pad A', '1', '50.00']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{:d},{},{},{BLANK:d},{BLANK:.2f}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:49: DEBUG   : Found Well Object WOBJREF:                 2
+16:16:49: DEBUG   : WOBJ CONSTRUCTOR: ['H7', '4', '0', '0', 'Position Object Definition                        ']
+16:16:49: DEBUG   : ROW  50: ['H7', '4', '0', '0', 'Position Object Definition                        ', '3', 'Origin Pad B', '1', 'Structure Reference Point', '', '-999', '-99999.00']
+16:16:49: DEBUG   : Found record ('H7', '4', '0', '0', 'Position Object Definition')
+16:16:49: DEBUG   : Descriptor OK: "Position Object Definition"
+16:16:49: DEBUG   : check_record_vs_spec: ['H7', '4', '0', '0', 'Position Object Definition                        ', '3', 'Origin Pad B', '1', 'Structure Reference Point', '', '-999', '-99999.00']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{:d},{},{},{BLANK:d},{BLANK:.2f}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:49: DEBUG   : Found Well Object WOBJREF:                 3
+16:16:49: DEBUG   : WOBJ CONSTRUCTOR: ['H7', '4', '0', '0', 'Position Object Definition                        ']
+16:16:49: DEBUG   : ROW  51: ['H7', '4', '0', '0', 'Position Object Definition                        ', '4', 'Conductor 210/16A-2', '2', 'Well Reference Point', 'on Pad B', '1', '50.00']
+16:16:49: DEBUG   : Found record ('H7', '4', '0', '0', 'Position Object Definition')
+16:16:49: DEBUG   : Descriptor OK: "Position Object Definition"
+16:16:49: DEBUG   : check_record_vs_spec: ['H7', '4', '0', '0', 'Position Object Definition                        ', '4', 'Conductor 210/16A-2', '2', 'Well Reference Point', 'on Pad B', '1', '50.00']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{:d},{},{},{BLANK:d},{BLANK:.2f}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:49: DEBUG   : Found Well Object WOBJREF:                 4
+16:16:49: DEBUG   : WOBJ CONSTRUCTOR: ['H7', '4', '0', '0', 'Position Object Definition                        ']
+16:16:49: DEBUG   : ROW  52: []
+16:16:49: DEBUG   : ROW  53: ['O7', '0', '1', 'Origin Pad-A', 'SRP', '425353.84', '6623785.69', '118.40', ' 59.7438428', '1.6719808', ' 59.7432856', '1.6703167', ' 1.40', '1.20']
+16:16:49: DEBUG   : ROW  54: ['O7', '0', '2', 'RefPt Well 1', 'WRP', '425353.84', '6623785.69', '118.40', ' 59.7438428', '1.6719808', ' 59.7432856', '1.6703167', ' 1.40', '1.20']
+16:16:49: DEBUG   : ROW  55: ['O7', '0', '3', 'Origin Pad-B', 'SRP', '425353.84', '6623785.69', '118.40', ' 59.7438428', '1.6719808', ' -99999.0000000', '-99999.0000000', ' 0.00', '0.00']
+16:16:49: DEBUG   : ROW  56: ['O7', '0', '4', 'RefPt Well 2', 'WRP', '425353.84', '6623785.69', '118.40', ' 59.7438428', '1.6719808', ' 59.7432856', '1.6703167', ' 1.40', '1.20']
+16:16:49: DEBUG   : ROW  57: []
+16:16:49: DEBUG   : ROW  58: ['H7', '5', '0', '0', 'Geomagnetic Model Definition                      ', '1', 'Single Point Supplied for Survey by Operator', 'IGRF1972', '1972', '']
+16:16:49: DEBUG   : Found record ('H7', '5', '0', '0', 'Geomagnetic Model Definition')
+16:16:49: DEBUG   : Descriptor OK: "Geomagnetic Model Definition"
+16:16:49: DEBUG   : check_record_vs_spec: ['H7', '5', '0', '0', 'Geomagnetic Model Definition                      ', '1', 'Single Point Supplied for Survey by Operator', 'IGRF1972', '1972', '']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{},{},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 10 <> 10
+16:16:49: DEBUG   : Found MAGREF definition:               1
+16:16:49: DEBUG   : ROW  59: ['H7', '5', '1', '0', 'Gravity Model Definition                          ', '1', 'IGF80']
+16:16:49: DEBUG   : Found record ('H7', '5', '1', '0', 'Gravity Model Definition')
+16:16:49: DEBUG   : Descriptor OK: "Gravity Model Definition"
+16:16:49: DEBUG   : check_record_vs_spec: ['H7', '5', '1', '0', 'Gravity Model Definition                          ', '1', 'IGF80']
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 7 <> 7
+16:16:49: DEBUG   : Found GRAVREF definition:               1
+16:16:49: DEBUG   : ROW  60: []
+16:16:49: DEBUG   : ROW  61: ['H7', '6', '5', '0', 'Position Log Type Definition                      ', '1', 'Composite', '1', '1', 'Minimum Curvature', '6666', 'LMP', '0', '-99999.00000', '0', '3', ' 1;;var_N;1', ' 2;;var_E;1', ' 3;;var_D;1']
+16:16:49: DEBUG   : Found record ('H7', '6', '5', '0', 'Position Log Type Definition')
+16:16:49: DEBUG   : Descriptor OK: "Position Log Type Definition"
+16:16:49: DEBUG   : check_record_vs_spec: ['H7', '6', '5', '0', 'Position Log Type Definition                      ', '1', 'Composite', '1', '1', 'Minimum Curvature', '6666', 'LMP', '0', '-99999.00000', '0', '3', ' 1;;var_N;1', ' 2;;var_E;1', ' 3;;var_D;1']
+16:16:49: DEBUG   : rec_Position_Log_Type_Definition may have extension fields
+16:16:49: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{:d},{:d},{},{:d},{},{:d},{BLANK:.5f},{:d},{:d},{}
+16:16:49: DEBUG   : Expected vs. Actual number of fields: 19 <> 19
+16:16:49: DEBUG   : Found POSLOGTYPE definition:               1
+16:16:49: DEBUG   : POSLOGTYPE CONSTRUCTOR: ['H7', '6', '5', '0', 'Position Log Type Definition                      ']
+16:16:49: DEBUG   : row[16+i]:  1;;var_N;1
+16:16:49: DEBUG   : row[16+i]:  2;;var_E;1
+16:16:49: DEBUG   : row[16+i]:  3;;var_D;1
+16:16:49: DEBUG   : ROW  62: []
+16:16:49: DEBUG   : ROW  63: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '8', 'Other', ' 173.09', '2.19', '292.15', ' 3.74', '-12.63', '173.00', ' 6623785.69', '425353.84', '117.00', ' 59.7438428', '1.6719808', ' 97; 98; 99']
+16:16:49: DEBUG   : ROW  64: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 200.00', '2.19', '292.15', ' 4.27', '-13.94', '209.88', ' 6623786.22', '425352.53', '153.88', ' 59.7438472', '1.6719572', ' 97; 98; 99']
+16:16:49: DEBUG   : ROW  65: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 300.00', '5.00', '300.00', ' 6.88', '-18.93', '299.70', ' 6623788.83', '425347.55', '243.70', ' 59.7438697', '1.6718678', ' 97; 98; 99']
+16:16:49: DEBUG   : ROW  66: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 780.77', '45.21', '62.97', ' 100.45', '123.34', '734.32', ' 6623882.37', '425489.77', '678.32', ' 59.7447350', '1.6743639', ' 97; 98; 99']
+16:16:49: DEBUG   : ROW  67: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 4294.98', '45.21', '62.97', ' 1234.00', '2345.00', '3210.00', ' 6625015.54', '427710.69', '3154.00', ' 59.7553000', '1.7134742', ' 97; 98; 99']
+16:16:49: DEBUG   : ROW  68: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 4380.15', '45.21', '62.97', ' 1261.47', '2398.00', '3270.00', ' 6625043.00', '427764.51', '3214.00', ' 59.7555558', '1.7144222', ' 97; 98; 99']
+16:16:49: DEBUG   : ROW  69: []
+16:16:49: DEBUG   : ROW  70: ['CC', '0', '0', '0', ' Following are the MWD raw data']
+16:16:49: DEBUG   : ROW  71: ['M7', '0', '1', '1', '2014:09:17:13:15:22.0', '1', ' 1740.000000', '36.000000', '75.430000', ' 41.920000', '158.750000', '1705.160000', ' 1', '4.177509', '3.972274', '7.934024', ' 10182.629900', '36850.997600', '52571.987760', '9.807103', '65003.814290', ' 71.921632', '304.220706', '-133.557428', ' 9.806986', '65094.495067', '71.939312', ' -2.000000', '0.000000', '']
+16:16:49: DEBUG   : ROW  72: ['M7', '0', '1', '1', '2014:09:17:13:15:22.0', '1', ' 1740.000000', '36.000000', '75.430000', ' 41.920000', '158.750000', '1705.160000', ' 1', '4.177509', '3.972274', '7.934024', ' 10182.629900', '36850.997600', '52571.987760', '9.807103', '65003.814290', ' 71.921632', '304.220706', '-133.557428', ' 9.806986', '65094.495067', '71.939312', ' -2.000000', '0.000000', '']
+16:16:49: DEBUG   : ROW  73: ['M7', '0', '1', '1', '2014:09:17:13:15:22.0', '1', ' 1740.000000', '36.000000', '75.430000', ' 41.920000', '158.750000', '1705.160000', ' 1', '4.177509', '3.972274', '7.934024', ' 10182.629900', '36850.997600', '52571.987760', '9.807103', '65003.814290', ' 71.921632', '304.220706', '-133.557428', ' 9.806986', '65094.495067', '71.939312', ' -2.000000', '0.000000', '']
+16:16:49: DEBUG   : ROW  74: []
+16:16:49: DEBUG   : ROW  75: ['CC', '0', '0', '0', ' Following are the Gyro raw data']
+16:16:49: DEBUG   : ROW  76: ['G7', '0', '2', '1', '2014:09:17:13:15:22.0', '1', ' 1740.000000', '36.000000', '75.000000', ' 42.480000', '158.540000', '1705.160000', ' 1', '4.179700', '3.969400', '7.933700', ' -1.008900', '10.314700', '-9.400300', '9.806650', '60.000000', '15.041000', ' 303.898400', '-133.522000', ' 9.806650', '60.000000', '15.041000', ' 0.000000', ' ']
+16:16:49: DEBUG   : ROW  77: []
+16:16:49: DEBUG   : Number of CRSs defined:       5
+16:16:49: DEBUG   : Number of CTs defined:        1
+16:16:49: DEBUG   : Number of well objects defined: 4
+16:16:49: DEBUG   : debug overview of WOBJREF:
+16:16:49: DEBUG   : 1: Origin Pad A (Structure Reference Point)
+16:16:49: DEBUG   : 2: Conductor 210/16A-1 (Well Reference Point)
+16:16:49: DEBUG   : 3: Origin Pad B (Structure Reference Point)
+16:16:49: DEBUG   : 4: Conductor 210/16A-2 (Well Reference Point)
+16:16:49: DEBUG   : Number of poslogtypes defined: 1
+16:16:49: INFO    :   Number of surveys found:    1
+16:16:49: INFO    :   Number of rigs found:       1
+16:16:49: INFO    :   Number of wellbores found:  1
+16:16:49: INFO    :   Number of wells found:      1
+16:16:49: INFO    :   Number of structures found: 1
+16:16:49: INFO    : 
+16:16:49: INFO    : Second pass over file to get details...
+16:16:49: INFO    : 
+16:16:49: INFO    : Checking existence of mandatory records in p717 file
+16:16:49: INFO    : Following list may not be complete:
+16:16:49: INFO    :   ('IOGP',)
+16:16:49: INFO    :   ('HC', '0', '1', '1', 'Project Name')
+16:16:49: INFO    :   ('HC', '0', '2', '1', 'Structure Definition')
+16:16:49: INFO    :   ('HC', '0', '3', '1', 'Well Definition')
+16:16:49: INFO    :   ('HC', '0', '4', '1', 'Wellbore Definition')
+16:16:49: INFO    :   ('HC', '0', '5', '1', 'ZDP Rig/Workover Definition')
+16:16:50: INFO    :   ('HC', '0', '6', '1', 'Survey Definition')
+16:16:50: INFO    :   ('HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source')
+16:16:50: INFO    :   ('H7', '0', '0', '0', 'File_Contents_Description')
+16:16:50: INFO    :   ('H7', '0', '1', '0', 'File Processing_Details')
+16:16:50: INFO    :   ('H7', '1', '0', '0', 'Structure Details')
+16:16:50: INFO    :   ('H7', '1', '1', '0', 'Well Details')
+16:16:50: INFO    :   ('H7', '1', '4', '0', 'Survey Details')
+16:16:50: INFO    :   ('H7', '4', '0', '0', 'Position Object Definition')
+16:16:50: INFO    :   ('H7', '6', '5', '0', 'Position Log Type Definition')
+16:16:50: INFO    :   ('O7',)
+16:16:50: INFO    :   ('P7',)
+16:16:50: INFO    : 
+16:16:50: DEBUG   : ROW   1: ['==================================================================']
+16:16:50: WARNING : Unrecognized record: ['==================================================================']
+16:16:50: DEBUG   : ROW   2: ['This p717 file converted from p7200 input as test.']
+16:16:50: WARNING : Unrecognized record: ['This p717 file converted from p7200 input as test.']
+16:16:50: DEBUG   : ROW   3: ['Created by p717writer.py on 2018-08-30 13:48:26.800074']
+16:16:50: WARNING : Unrecognized record: ['Created by p717writer.py on 2018-08-30 13:48:26.800074']
+16:16:50: DEBUG   : ROW   4: ['input file: data1-small-.csv']
+16:16:50: WARNING : Unrecognized record: ['input file: data1-small-.csv']
+16:16:50: DEBUG   : ROW   5: ['p717writer based on format specification draft v1.0 2018-07-15 provided AS-IS for demonstration purposes only!']
+16:16:50: WARNING : Unrecognized record: ['p717writer based on format specification draft v1.0 2018-07-15 provided AS-IS for demonstration purposes only!']
+16:16:50: DEBUG   : ROW   6: ['==================================================================']
+16:16:50: WARNING : Unrecognized record: ['==================================================================']
+16:16:50: DEBUG   : ROW   7: []
+16:16:50: DEBUG   : ROW   8: ['IOGP', 'IOGP P7', '7', '1.0', '1', '2018:08:30', '13:48:26', 'data1-small-.csv.2018-08-30.p717', 'p717 sample writer']
+16:16:50: DEBUG   : Found record ('IOGP',)
+16:16:50: DEBUG   : check_record_vs_spec: ['IOGP', 'IOGP P7', '7', '1.0', '1', '2018:08:30', '13:48:26', 'data1-small-.csv.2018-08-30.p717', 'p717 sample writer']
+16:16:50: DEBUG   : Record fmt: {},{},{},{:f},{:d},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 9 <> 9
+16:16:50: DEBUG   : ROW   9: ['HC', '0', '1', '1', 'Project Name                                      ', 'Pegasus', 'Pegasus Field', 'Texas', 'United States', 'USA', 'NAD27 / Texas Central + NGVD29 depth (ftUS)', '4', 'ftUS', 'ftUS)']
+16:16:50: DEBUG   : Found record ('HC', '0', '1', '1', 'Project Name')
+16:16:50: DEBUG   : Descriptor OK: "Project Name"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '0', '1', '1', 'Project Name                                      ', 'Pegasus', 'Pegasus Field', 'Texas', 'United States', 'USA', 'NAD27 / Texas Central + NGVD29 depth (ftUS)', '4', 'ftUS', 'ftUS)']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{},{},{},{},{},{},{:d},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 14 <> 14
+16:16:50: DEBUG   : set_rec_Project_Name ROW: ['HC', '0', '1', '1', 'Project Name                                      ']
+16:16:50: DEBUG   : ROW  10: ['HC', '0', '2', '1', 'Structure Definition                              ', '1', 'Pad A', 'SRP', '1', 'Centre Slot A1', 'Onshore']
+16:16:50: DEBUG   : Found record ('HC', '0', '2', '1', 'Structure Definition')
+16:16:50: DEBUG   : Descriptor OK: "Structure Definition"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '0', '2', '1', 'Structure Definition                              ', '1', 'Pad A', 'SRP', '1', 'Centre Slot A1', 'Onshore']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{},{:d},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 11 <> 11
+16:16:50: DEBUG   : ROW  11: ['HC', '0', '3', '1', 'Well Definition                                   ', '1', '1', 'WRP', '2', '207/29-A6', '207/29-A6', 'DTI', '', '', '', 'As-drilled', 'UKCS Block 207/29', '2012:05:15']
+16:16:50: DEBUG   : Found record ('HC', '0', '3', '1', 'Well Definition')
+16:16:50: DEBUG   : Descriptor OK: "Well Definition"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '0', '3', '1', 'Well Definition                                   ', '1', '1', 'WRP', '2', '207/29-A6', '207/29-A6', 'DTI', '', '', '', 'As-drilled', 'UKCS Block 207/29', '2012:05:15']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{},{:d},{},{},{},{},{},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 18 <> 18
+16:16:50: DEBUG   : ROW  12: ['HC', '0', '4', '1', 'Wellbore Definition                               ', '1', '1', '207/29-2Z', '207/29-2Z', 'OGA', '', '', '', 'Existing', '207/29', '', 'ST=Y', '1750.5', '1', '2012:06:01']
+16:16:50: DEBUG   : Found record ('HC', '0', '4', '1', 'Wellbore Definition')
+16:16:50: DEBUG   : Descriptor OK: "Wellbore Definition"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '0', '4', '1', 'Wellbore Definition                               ', '1', '1', '207/29-2Z', '207/29-2Z', 'OGA', '', '', '', 'Existing', '207/29', '', 'ST=Y', '1750.5', '1', '2012:06:01']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{},{},{},{},{},{},{},{},{},{},{BLANK:.1f},{BLANK:d},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 20 <> 20
+16:16:50: DEBUG   : ROW  13: ['HC', '0', '5', '1', 'ZDP Rig/Workover Definition                       ', '1', 'Unknown Rig', 'KB', '275.5', '0.5', '8.3', '2011:01:01']
+16:16:50: DEBUG   : Found record ('HC', '0', '5', '1', 'ZDP Rig/Workover Definition')
+16:16:50: DEBUG   : Descriptor OK: "ZDP Rig/Workover Definition"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '0', '5', '1', 'ZDP Rig/Workover Definition                       ', '1', 'Unknown Rig', 'KB', '275.5', '0.5', '8.3', '2011:01:01']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{},{:.1f},{BLANK:.1f},{BLANK:.1f},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:50: DEBUG   : ROW  14: ['HC', '0', '6', '1', 'Survey Definition                                 ', '1', '1', '1', 'Final Run', 'Gyro', '2', 'Open Hole', '7-5/8', 'In', '1100.00', '2150.00', 'ft', 'Grid North', '-99999.000', '2012:07:01', '2012:07:02']
+16:16:50: DEBUG   : Found record ('HC', '0', '6', '1', 'Survey Definition')
+16:16:50: DEBUG   : Descriptor OK: "Survey Definition"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '0', '6', '1', 'Survey Definition                                 ', '1', '1', '1', 'Final Run', 'Gyro', '2', 'Open Hole', '7-5/8', 'In', '1100.00', '2150.00', 'ft', 'Grid North', '-99999.000', '2012:07:01', '2012:07:02']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{:d},{},{},{BLANK:d},{},{},{},{:.2f},{:.2f},{},{},{BLANK:.3f},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 21 <> 21
+16:16:50: DEBUG   : ROW  15: []
+16:16:50: DEBUG   : ROW  16: ['HC', '0', '7', '1', 'Operator/Survey Contractor (Acqn)                 ', '1', 'Highland Oil', 'Tain Drilling', 'TD101', '']
+16:16:50: DEBUG   : Found record ('HC', '0', '7', '1', 'Operator/Survey Contractor (Acqn)')
+16:16:50: DEBUG   : Descriptor OK: "Operator/Survey Contractor (Acqn)"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '0', '7', '1', 'Operator/Survey Contractor (Acqn)                 ', '1', 'Highland Oil', 'Tain Drilling', 'TD101', '']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 10 <> 10
+16:16:50: DEBUG   : ROW  17: ['HC', '0', '7', '2', 'Operator/Survey Contractor (Proc)                 ', '1', 'Lowland Exploration and Production', 'Directional Services Inc', 'DS501', '1994:04:15']
+16:16:50: DEBUG   : Found record ('HC', '0', '7', '2', 'Operator/Survey Contractor (Proc)')
+16:16:50: DEBUG   : Descriptor OK: "Operator/Survey Contractor (Proc)"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '0', '7', '2', 'Operator/Survey Contractor (Proc)                 ', '1', 'Lowland Exploration and Production', 'Directional Services Inc', 'DS501', '1994:04:15']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 10 <> 10
+16:16:50: DEBUG   : ROW  18: []
+16:16:50: DEBUG   : ROW  19: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '1', '4326', 'WGS 84', '8.5', '2014:06:27', 'EPSG', 'Global CRS for well object position records']
+16:16:50: DEBUG   : Found record ('HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source')
+16:16:50: DEBUG   : Descriptor OK: "CRS Number/EPSG Code/Name/Source"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '1', '4326', 'WGS 84', '8.5', '2014:06:27', 'EPSG', 'Global CRS for well object position records']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:50: DEBUG   : ROW  20: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '2', '4230', 'ED50', '8.5', '2014:06:27', 'EPSG', 'Used for Geographical coordinates in PosLog']
+16:16:50: DEBUG   : Found record ('HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source')
+16:16:50: DEBUG   : Descriptor OK: "CRS Number/EPSG Code/Name/Source"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '2', '4230', 'ED50', '8.5', '2014:06:27', 'EPSG', 'Used for Geographical coordinates in PosLog']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:50: DEBUG   : ROW  21: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '3', '23031', 'ED50 / UTM zone 31N', '8.5', '2014:06:27', 'EPSG', 'Used for Structure and Displacements Origin CRS']
+16:16:50: DEBUG   : Found record ('HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source')
+16:16:50: DEBUG   : Descriptor OK: "CRS Number/EPSG Code/Name/Source"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '3', '23031', 'ED50 / UTM zone 31N', '8.5', '2014:06:27', 'EPSG', 'Used for Structure and Displacements Origin CRS']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:50: DEBUG   : ROW  22: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '4', '8051', 'MSL depth (ft)', '', '', '', 'Used for Water Depth and TVD below VRS']
+16:16:50: DEBUG   : Found record ('HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source')
+16:16:50: DEBUG   : Descriptor OK: "CRS Number/EPSG Code/Name/Source"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '4', '8051', 'MSL depth (ft)', '', '', '', 'Used for Water Depth and TVD below VRS']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:50: DEBUG   : ROW  23: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '5', '-999', 'ED50 / UTM zone 31N + MSL depth (ft)', '', '', '', 'Used for Compound CRS for Projected + TVD below VRS coordinates in PosLog and WRP']
+16:16:50: DEBUG   : Found record ('HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source')
+16:16:50: DEBUG   : Descriptor OK: "CRS Number/EPSG Code/Name/Source"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '1', '3', '0', 'CRS Number/EPSG Code/Name/Source                  ', '5', '-999', 'ED50 / UTM zone 31N + MSL depth (ft)', '', '', '', 'Used for Compound CRS for Projected + TVD below VRS coordinates in PosLog and WRP']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:50: DEBUG   : ROW  24: []
+16:16:50: DEBUG   : ROW  25: ['CC', '0', '0', '0', 'Explicit CRS definition records follow for each CRS not in EPSG database']
+16:16:50: DEBUG   : Found record ('CC', '0', '0', '0')
+16:16:50: DEBUG   : check_record_vs_spec: ['CC', '0', '0', '0', 'Explicit CRS definition records follow for each CRS not in EPSG database']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 5 <> 5
+16:16:50: DEBUG   : ROW  26: ['HC', '1', '6', '1', 'Coordinate System Axis 1                          ', '3', '1', '1', 'Easting', 'east', 'E', '1', 'metre']
+16:16:50: DEBUG   : Found record ('HC', '1', '6', '1', 'Coordinate System Axis {AxisNumber}')
+16:16:50: DEBUG   : Descriptor OK: "Coordinate System Axis 1"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '1', '6', '1', 'Coordinate System Axis 1                          ', '3', '1', '1', 'Easting', 'east', 'E', '1', 'metre']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{BLANK:d},{},{},{},{:d},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 13 <> 13
+16:16:50: DEBUG   : CS set axis details: ['HC', '1', '6', '1', 'Coordinate System Axis 1                          ']
+16:16:50: DEBUG   : ROW  27: ['HC', '1', '6', '1', 'Coordinate System Axis 2                          ', '3', '2', '2', 'Northing', 'north', 'N', '1', 'metre']
+16:16:50: DEBUG   : Found record ('HC', '1', '6', '1', 'Coordinate System Axis {AxisNumber}')
+16:16:50: DEBUG   : Descriptor OK: "Coordinate System Axis 2"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '1', '6', '1', 'Coordinate System Axis 2                          ', '3', '2', '2', 'Northing', 'north', 'N', '1', 'metre']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{BLANK:d},{},{},{},{:d},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 13 <> 13
+16:16:50: DEBUG   : CS set axis details: ['HC', '1', '6', '1', 'Coordinate System Axis 2                          ']
+16:16:50: DEBUG   : ROW  28: ['HC', '1', '6', '1', 'Coordinate System Axis 1                          ', '4', '1', '214', 'Depth', 'down', 'D', '15', 'foot']
+16:16:50: DEBUG   : Found record ('HC', '1', '6', '1', 'Coordinate System Axis {AxisNumber}')
+16:16:50: DEBUG   : Descriptor OK: "Coordinate System Axis 1"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '1', '6', '1', 'Coordinate System Axis 1                          ', '4', '1', '214', 'Depth', 'down', 'D', '15', 'foot']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{BLANK:d},{},{},{},{:d},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 13 <> 13
+16:16:50: DEBUG   : CS set axis details: ['HC', '1', '6', '1', 'Coordinate System Axis 1                          ']
+16:16:50: DEBUG   : ROW  29: ['HC', '1', '4', '0', 'CRS Number/EPSG Code/Type/Name                    ', '5', '-999', '7', 'compound', 'ED50 / UTM zone 31N + MSL depth (ft)']
+16:16:50: DEBUG   : Found record ('HC', '1', '4', '0', 'CRS Number/EPSG Code/Type/Name')
+16:16:50: DEBUG   : Descriptor OK: "CRS Number/EPSG Code/Type/Name"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '1', '4', '0', 'CRS Number/EPSG Code/Type/Name                    ', '5', '-999', '7', 'compound', 'ED50 / UTM zone 31N + MSL depth (ft)']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{:d},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 10 <> 10
+16:16:50: DEBUG   : CRS set details: ['HC', '1', '4', '0', 'CRS Number/EPSG Code/Type/Name                    ']
+16:16:50: DEBUG   : ROW  30: ['HC', '1', '4', '1', 'Compound Horizontal CRS                           ', '5', '3', '7', 'ED50 / UTM zone 31N']
+16:16:50: DEBUG   : Found record ('HC', '1', '4', '1', 'Compound Horizontal CRS')
+16:16:50: DEBUG   : Descriptor OK: "Compound Horizontal CRS"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '1', '4', '1', 'Compound Horizontal CRS                           ', '5', '3', '7', 'ED50 / UTM zone 31N']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{BLANK:d},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 9 <> 9
+16:16:50: DEBUG   : Compound CRS horizontal set details: ['HC', '1', '4', '1', 'Compound Horizontal CRS                           ']
+16:16:50: DEBUG   : ROW  31: ['HC', '1', '4', '2', 'Compound Vertical CRS                             ', '5', '4', '7', 'MSL depth (ft)']
+16:16:50: DEBUG   : Found record ('HC', '1', '4', '2', 'Compound Vertical CRS')
+16:16:50: DEBUG   : Descriptor OK: "Compound Vertical CRS"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '1', '4', '2', 'Compound Vertical CRS                             ', '5', '4', '7', 'MSL depth (ft)']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{BLANK:d},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 9 <> 9
+16:16:50: DEBUG   : Compound CRS vertical set details: ['HC', '1', '4', '2', 'Compound Vertical CRS                             ']
+16:16:50: DEBUG   : ROW  32: []
+16:16:50: DEBUG   : ROW  33: ['HC', '1', '7', '0', 'Transformation Number/EPSG Code/Name/Source       ', '1', '1311', 'ED50 to WGS 84 (18)', '8.5', '2014:06:27', 'EPSG', '']
+16:16:50: DEBUG   : Found record ('HC', '1', '7', '0', 'Transformation Number/EPSG Code/Name/Source')
+16:16:50: DEBUG   : Descriptor OK: "Transformation Number/EPSG Code/Name/Source"
+16:16:50: DEBUG   : check_record_vs_spec: ['HC', '1', '7', '0', 'Transformation Number/EPSG Code/Name/Source       ', '1', '1311', 'ED50 to WGS 84 (18)', '8.5', '2014:06:27', 'EPSG', '']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:50: DEBUG   : ROW  34: []
+16:16:50: DEBUG   : ROW  35: ['CC', '0', '0', '0', 'The P7-Specific header records follow']
+16:16:50: DEBUG   : Found record ('CC', '0', '0', '0')
+16:16:50: DEBUG   : check_record_vs_spec: ['CC', '0', '0', '0', 'The P7-Specific header records follow']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 5 <> 5
+16:16:50: DEBUG   : ROW  36: ['H7', '0', '0', '0', 'File_Contents_Description                         ', 'Definitive survey of 207/29-1Z wellbore from 2001', '']
+16:16:50: DEBUG   : Found record ('H7', '0', '0', '0', 'File_Contents_Description')
+16:16:50: DEBUG   : Descriptor OK: "File_Contents_Description"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '0', '0', '0', 'File_Contents_Description                         ', 'Definitive survey of 207/29-1Z wellbore from 2001', '']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 7 <> 7
+16:16:50: DEBUG   : set_rec_File_Contents_Description ROW: ['H7', '0', '0', '0', 'File_Contents_Description                         ']
+16:16:50: DEBUG   : ROW  37: ['H7', '0', '1', '0', 'File Processing_Details                           ', 'Reformatted to P7/17 format by Well Data Processors INC']
+16:16:50: DEBUG   : Found record ('H7', '0', '1', '0', 'File Processing_Details')
+16:16:50: DEBUG   : Descriptor OK: "File Processing_Details"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '0', '1', '0', 'File Processing_Details                           ', 'Reformatted to P7/17 format by Well Data Processors INC']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 6 <> 6
+16:16:50: DEBUG   : set_rec_File_Processing_Details ROW: ['H7', '0', '1', '0', 'File Processing_Details                           ']
+16:16:50: DEBUG   : ROW  38: ['H7', '1', '0', '0', 'Structure Details                                 ', '1', 'Top of template', '192.0', '8021.4', '2011:06:21', '0', 'True North', '30.207']
+16:16:50: DEBUG   : Found record ('H7', '1', '0', '0', 'Structure Details')
+16:16:50: DEBUG   : Descriptor OK: "Structure Details"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '1', '0', '0', 'Structure Details                                 ', '1', 'Top of template', '192.0', '8021.4', '2011:06:21', '0', 'True North', '30.207']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{BLANK:.1f},{BLANK:.1f},{},{BLANK:d},{},{BLANK:.3f}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 13 <> 13
+16:16:50: DEBUG   : Found Structure details for Structure:     1
+16:16:50: DEBUG   : Structure Details ROW: ['H7', '1', '0', '0', 'Structure Details                                 ']
+16:16:50: DEBUG   : ROW  39: ['H7', '1', '1', '0', 'Well Details                                      ', '1', 'Centre slot A1', 'Template installation report', 'A1', '32.000000', '22', ' 15.00', '10.00']
+16:16:50: DEBUG   : Found record ('H7', '1', '1', '0', 'Well Details')
+16:16:50: DEBUG   : Descriptor OK: "Well Details"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '1', '1', '0', 'Well Details                                      ', '1', 'Centre slot A1', 'Template installation report', 'A1', '32.000000', '22', ' 15.00', '10.00']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{},{},{BLANK:f},{BLANK:d}, {BLANK:.2f},{BLANK:.2f}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 13 <> 13
+16:16:50: DEBUG   : Found well details for well:               1
+16:16:50: DEBUG   : WELL SET WELL DETAILS ROW: ['H7', '1', '1', '0', 'Well Details                                      ']
+16:16:50: DEBUG   : ROW  40: ['H7', '1', '4', '0', 'Survey Details                                    ', '1', ' 1', '1', 'MD-Drillpipe', '1', 'Indicated Depth', ' 1', ' 8', 'AZ_GRID', '3', 'Calculated from AZ_MAGN', ' 1', '2.151', '-1.12', '35342.0', ' 1972:06:28', ' 1', '1.500', '9.80739', ' 1', '1']
+16:16:50: DEBUG   : Found record ('H7', '1', '4', '0', 'Survey Details')
+16:16:50: DEBUG   : Descriptor OK: "Survey Details"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '1', '4', '0', 'Survey Details                                    ', '1', ' 1', '1', 'MD-Drillpipe', '1', 'Indicated Depth', ' 1', ' 8', 'AZ_GRID', '3', 'Calculated from AZ_MAGN', ' 1', '2.151', '-1.12', '35342.0', ' 1972:06:28', ' 1', '1.500', '9.80739', ' 1', '1']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d}, {:d},{:d},{},{:d},{}, {:d}, {:d},{},{:d},{}, {:d},{BLANK:.3f},{BLANK:.2f},{BLANK:.1f}, {}, {:d},{BLANK:.3f},{BLANK:.5f}, {BLANK:d},{BLANK:d}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 26 <> 26
+16:16:50: DEBUG   : SET SURVEY DETAILS ROW: ['H7', '1', '4', '0', 'Survey Details                                    ']
+16:16:50: DEBUG   : ROW  41: ['H7', '1', '4', '1', 'Survey Tie Point Details                          ', '1', '2015.00', '-2.50', '1.30', '2008.70']
+16:16:50: DEBUG   : Found record ('H7', '1', '4', '1', 'Survey Tie Point Details')
+16:16:50: DEBUG   : Descriptor OK: "Survey Tie Point Details"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '1', '4', '1', 'Survey Tie Point Details                          ', '1', '2015.00', '-2.50', '1.30', '2008.70']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:.2f},{:.2f},{:.2f},{:.2f}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 10 <> 10
+16:16:50: DEBUG   : SET Tie-Point DETAILS ROW: ['H7', '1', '4', '1', 'Survey Tie Point Details                          ']
+16:16:50: ERROR   : NEED TO CHANGE THIS TO POSLOGREF and get the SURVEY perhaps or somehow...
+16:16:50: DEBUG   : ROW  42: []
+16:16:50: DEBUG   : ROW  43: ['H7', '3', '0', '0', 'Measurement Tool Information                      ', '2', 'High-Speed Gyro', 'HSG', '2', 'Gyro-Tools Inc', 'unknown serial number']
+16:16:50: DEBUG   : Found record ('H7', '3', '0', '0', 'Measurement Tool Information')
+16:16:50: DEBUG   : Descriptor OK: "Measurement Tool Information"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '3', '0', '0', 'Measurement Tool Information                      ', '2', 'High-Speed Gyro', 'HSG', '2', 'Gyro-Tools Inc', 'unknown serial number']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{},{:d},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 11 <> 11
+16:16:50: DEBUG   : ignoring Measurement Tool for now
+16:16:50: DEBUG   : ROW  44: ['H7', '3', '0', '1', 'Data Retrieval                                    ', '2', '1', 'Stored in tool', '-999', '']
+16:16:50: DEBUG   : Found record ('H7', '3', '0', '1', '{MtAttRefName}')
+16:16:50: DEBUG   : Descriptor OK: "Data Retrieval                                    "
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '3', '0', '1', 'Data Retrieval                                    ', '2', '1', 'Stored in tool', '-999', '']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{},{:d},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 10 <> 10
+16:16:50: DEBUG   : ROW  45: ['H7', '3', '0', '1', 'Measurement Trigger                               ', '2', '2', 'some text', '-999', '']
+16:16:50: DEBUG   : Found record ('H7', '3', '0', '1', '{MtAttRefName}')
+16:16:50: DEBUG   : Descriptor OK: "Measurement Trigger                               "
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '3', '0', '1', 'Measurement Trigger                               ', '2', '2', 'some text', '-999', '']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{:d},{},{:d},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 10 <> 10
+16:16:50: DEBUG   : ROW  46: []
+16:16:50: DEBUG   : ROW  47: ['CC', '0', '0', '0', 'Position Objects follow']
+16:16:50: DEBUG   : Found record ('CC', '0', '0', '0')
+16:16:50: DEBUG   : check_record_vs_spec: ['CC', '0', '0', '0', 'Position Objects follow']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 5 <> 5
+16:16:50: DEBUG   : ROW  48: ['H7', '4', '0', '0', 'Position Object Definition                        ', '1', 'Origin Pad A', '1', 'Structure Reference Point', '', '-999', '-99999.00']
+16:16:50: DEBUG   : Found record ('H7', '4', '0', '0', 'Position Object Definition')
+16:16:50: DEBUG   : Descriptor OK: "Position Object Definition"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '4', '0', '0', 'Position Object Definition                        ', '1', 'Origin Pad A', '1', 'Structure Reference Point', '', '-999', '-99999.00']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{:d},{},{},{BLANK:d},{BLANK:.2f}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:50: DEBUG   : ROW  49: ['H7', '4', '0', '0', 'Position Object Definition                        ', '2', 'Conductor 210/16A-1', '2', 'Well Reference Point', 'on Pad A', '1', '50.00']
+16:16:50: DEBUG   : Found record ('H7', '4', '0', '0', 'Position Object Definition')
+16:16:50: DEBUG   : Descriptor OK: "Position Object Definition"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '4', '0', '0', 'Position Object Definition                        ', '2', 'Conductor 210/16A-1', '2', 'Well Reference Point', 'on Pad A', '1', '50.00']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{:d},{},{},{BLANK:d},{BLANK:.2f}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:50: DEBUG   : ROW  50: ['H7', '4', '0', '0', 'Position Object Definition                        ', '3', 'Origin Pad B', '1', 'Structure Reference Point', '', '-999', '-99999.00']
+16:16:50: DEBUG   : Found record ('H7', '4', '0', '0', 'Position Object Definition')
+16:16:50: DEBUG   : Descriptor OK: "Position Object Definition"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '4', '0', '0', 'Position Object Definition                        ', '3', 'Origin Pad B', '1', 'Structure Reference Point', '', '-999', '-99999.00']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{:d},{},{},{BLANK:d},{BLANK:.2f}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:50: DEBUG   : ROW  51: ['H7', '4', '0', '0', 'Position Object Definition                        ', '4', 'Conductor 210/16A-2', '2', 'Well Reference Point', 'on Pad B', '1', '50.00']
+16:16:50: DEBUG   : Found record ('H7', '4', '0', '0', 'Position Object Definition')
+16:16:50: DEBUG   : Descriptor OK: "Position Object Definition"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '4', '0', '0', 'Position Object Definition                        ', '4', 'Conductor 210/16A-2', '2', 'Well Reference Point', 'on Pad B', '1', '50.00']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{:d},{},{},{BLANK:d},{BLANK:.2f}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 12 <> 12
+16:16:50: DEBUG   : ROW  52: []
+16:16:50: DEBUG   : ROW  53: ['O7', '0', '1', 'Origin Pad-A', 'SRP', '425353.84', '6623785.69', '118.40', ' 59.7438428', '1.6719808', ' 59.7432856', '1.6703167', ' 1.40', '1.20']
+16:16:50: DEBUG   : Found record ('O7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['O7', '0', '1', 'Origin Pad-A', 'SRP', '425353.84', '6623785.69', '118.40', ' 59.7438428', '1.6719808', ' 59.7432856', '1.6703167', ' 1.40', '1.20']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{},{},{BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.7f},{BLANK:.7f}, {BLANK:.7f},{BLANK:.7f}, {BLANK:.2f},{BLANK:.2f}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 14 <> 14
+16:16:50: DEBUG   : O7 ROW: ['O7', '0', '1', 'Origin Pad-A', 'SRP']
+16:16:50: DEBUG   : ROW  54: ['O7', '0', '2', 'RefPt Well 1', 'WRP', '425353.84', '6623785.69', '118.40', ' 59.7438428', '1.6719808', ' 59.7432856', '1.6703167', ' 1.40', '1.20']
+16:16:50: DEBUG   : Found record ('O7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['O7', '0', '2', 'RefPt Well 1', 'WRP', '425353.84', '6623785.69', '118.40', ' 59.7438428', '1.6719808', ' 59.7432856', '1.6703167', ' 1.40', '1.20']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{},{},{BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.7f},{BLANK:.7f}, {BLANK:.7f},{BLANK:.7f}, {BLANK:.2f},{BLANK:.2f}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 14 <> 14
+16:16:50: DEBUG   : O7 ROW: ['O7', '0', '2', 'RefPt Well 1', 'WRP']
+16:16:50: DEBUG   : ROW  55: ['O7', '0', '3', 'Origin Pad-B', 'SRP', '425353.84', '6623785.69', '118.40', ' 59.7438428', '1.6719808', ' -99999.0000000', '-99999.0000000', ' 0.00', '0.00']
+16:16:50: DEBUG   : Found record ('O7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['O7', '0', '3', 'Origin Pad-B', 'SRP', '425353.84', '6623785.69', '118.40', ' 59.7438428', '1.6719808', ' -99999.0000000', '-99999.0000000', ' 0.00', '0.00']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{},{},{BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.7f},{BLANK:.7f}, {BLANK:.7f},{BLANK:.7f}, {BLANK:.2f},{BLANK:.2f}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 14 <> 14
+16:16:50: DEBUG   : O7 ROW: ['O7', '0', '3', 'Origin Pad-B', 'SRP']
+16:16:50: DEBUG   : ROW  56: ['O7', '0', '4', 'RefPt Well 2', 'WRP', '425353.84', '6623785.69', '118.40', ' 59.7438428', '1.6719808', ' 59.7432856', '1.6703167', ' 1.40', '1.20']
+16:16:50: DEBUG   : Found record ('O7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['O7', '0', '4', 'RefPt Well 2', 'WRP', '425353.84', '6623785.69', '118.40', ' 59.7438428', '1.6719808', ' 59.7432856', '1.6703167', ' 1.40', '1.20']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{},{},{BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.7f},{BLANK:.7f}, {BLANK:.7f},{BLANK:.7f}, {BLANK:.2f},{BLANK:.2f}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 14 <> 14
+16:16:50: DEBUG   : O7 ROW: ['O7', '0', '4', 'RefPt Well 2', 'WRP']
+16:16:50: DEBUG   : ROW  57: []
+16:16:50: DEBUG   : ROW  58: ['H7', '5', '0', '0', 'Geomagnetic Model Definition                      ', '1', 'Single Point Supplied for Survey by Operator', 'IGRF1972', '1972', '']
+16:16:50: DEBUG   : Found record ('H7', '5', '0', '0', 'Geomagnetic Model Definition')
+16:16:50: DEBUG   : Descriptor OK: "Geomagnetic Model Definition"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '5', '0', '0', 'Geomagnetic Model Definition                      ', '1', 'Single Point Supplied for Survey by Operator', 'IGRF1972', '1972', '']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 10 <> 10
+16:16:50: DEBUG   : ROW  59: ['H7', '5', '1', '0', 'Gravity Model Definition                          ', '1', 'IGF80']
+16:16:50: DEBUG   : Found record ('H7', '5', '1', '0', 'Gravity Model Definition')
+16:16:50: DEBUG   : Descriptor OK: "Gravity Model Definition"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '5', '1', '0', 'Gravity Model Definition                          ', '1', 'IGF80']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 7 <> 7
+16:16:50: DEBUG   : ROW  60: []
+16:16:50: DEBUG   : ROW  61: ['H7', '6', '5', '0', 'Position Log Type Definition                      ', '1', 'Composite', '1', '1', 'Minimum Curvature', '6666', 'LMP', '0', '-99999.00000', '0', '3', ' 1;;var_N;1', ' 2;;var_E;1', ' 3;;var_D;1']
+16:16:50: DEBUG   : Found record ('H7', '6', '5', '0', 'Position Log Type Definition')
+16:16:50: DEBUG   : Descriptor OK: "Position Log Type Definition"
+16:16:50: DEBUG   : check_record_vs_spec: ['H7', '6', '5', '0', 'Position Log Type Definition                      ', '1', 'Composite', '1', '1', 'Minimum Curvature', '6666', 'LMP', '0', '-99999.00000', '0', '3', ' 1;;var_N;1', ' 2;;var_E;1', ' 3;;var_D;1']
+16:16:50: DEBUG   : rec_Position_Log_Type_Definition may have extension fields
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{:<50},{:d},{},{:d},{:d},{},{:d},{},{:d},{BLANK:.5f},{:d},{:d},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 19 <> 19
+16:16:50: DEBUG   : ROW  62: []
+16:16:50: DEBUG   : ROW  63: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '8', 'Other', ' 173.09', '2.19', '292.15', ' 3.74', '-12.63', '173.00', ' 6623785.69', '425353.84', '117.00', ' 59.7438428', '1.6719808', ' 97; 98; 99']
+16:16:50: DEBUG   : Found record ('P7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '8', 'Other', ' 173.09', '2.19', '292.15', ' 3.74', '-12.63', '173.00', ' 6623785.69', '425353.84', '117.00', ' 59.7438428', '1.6719808', ' 97; 98; 99']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{:d},{:d},{},{:d},{},{:d},{}, {:.2f},{:.2f},{:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.7f},{BLANK:.7f},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 22 <> 22
+16:16:50: DEBUG   : set_rec_P7_Position_Log_Record
+16:16:50: DEBUG   : ROW  64: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 200.00', '2.19', '292.15', ' 4.27', '-13.94', '209.88', ' 6623786.22', '425352.53', '153.88', ' 59.7438472', '1.6719572', ' 97; 98; 99']
+16:16:50: DEBUG   : Found record ('P7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 200.00', '2.19', '292.15', ' 4.27', '-13.94', '209.88', ' 6623786.22', '425352.53', '153.88', ' 59.7438472', '1.6719572', ' 97; 98; 99']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{:d},{:d},{},{:d},{},{:d},{}, {:.2f},{:.2f},{:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.7f},{BLANK:.7f},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 22 <> 22
+16:16:50: DEBUG   : set_rec_P7_Position_Log_Record
+16:16:50: DEBUG   : ROW  65: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 300.00', '5.00', '300.00', ' 6.88', '-18.93', '299.70', ' 6623788.83', '425347.55', '243.70', ' 59.7438697', '1.6718678', ' 97; 98; 99']
+16:16:50: DEBUG   : Found record ('P7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 300.00', '5.00', '300.00', ' 6.88', '-18.93', '299.70', ' 6623788.83', '425347.55', '243.70', ' 59.7438697', '1.6718678', ' 97; 98; 99']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{:d},{:d},{},{:d},{},{:d},{}, {:.2f},{:.2f},{:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.7f},{BLANK:.7f},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 22 <> 22
+16:16:50: DEBUG   : set_rec_P7_Position_Log_Record
+16:16:50: DEBUG   : ROW  66: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 780.77', '45.21', '62.97', ' 100.45', '123.34', '734.32', ' 6623882.37', '425489.77', '678.32', ' 59.7447350', '1.6743639', ' 97; 98; 99']
+16:16:50: DEBUG   : Found record ('P7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 780.77', '45.21', '62.97', ' 100.45', '123.34', '734.32', ' 6623882.37', '425489.77', '678.32', ' 59.7447350', '1.6743639', ' 97; 98; 99']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{:d},{:d},{},{:d},{},{:d},{}, {:.2f},{:.2f},{:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.7f},{BLANK:.7f},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 22 <> 22
+16:16:50: DEBUG   : set_rec_P7_Position_Log_Record
+16:16:50: DEBUG   : ROW  67: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 4294.98', '45.21', '62.97', ' 1234.00', '2345.00', '3210.00', ' 6625015.54', '427710.69', '3154.00', ' 59.7553000', '1.7134742', ' 97; 98; 99']
+16:16:50: DEBUG   : Found record ('P7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 4294.98', '45.21', '62.97', ' 1234.00', '2345.00', '3210.00', ' 6625015.54', '427710.69', '3154.00', ' 59.7553000', '1.7134742', ' 97; 98; 99']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{:d},{:d},{},{:d},{},{:d},{}, {:.2f},{:.2f},{:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.7f},{BLANK:.7f},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 22 <> 22
+16:16:50: DEBUG   : set_rec_P7_Position_Log_Record
+16:16:50: DEBUG   : ROW  68: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 4380.15', '45.21', '62.97', ' 1261.47', '2398.00', '3270.00', ' 6625043.00', '427764.51', '3214.00', ' 59.7555558', '1.7144222', ' 97; 98; 99']
+16:16:50: DEBUG   : Found record ('P7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['P7', '0', '1', '1', '1', 'A001Mb_MWD', '10', 'D', '2', 'Planned', ' 4380.15', '45.21', '62.97', ' 1261.47', '2398.00', '3270.00', ' 6625043.00', '427764.51', '3214.00', ' 59.7555558', '1.7144222', ' 97; 98; 99']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{:d},{:d},{},{:d},{},{:d},{}, {:.2f},{:.2f},{:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.7f},{BLANK:.7f},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 22 <> 22
+16:16:50: DEBUG   : set_rec_P7_Position_Log_Record
+16:16:50: DEBUG   : ROW  69: []
+16:16:50: DEBUG   : ROW  70: ['CC', '0', '0', '0', ' Following are the MWD raw data']
+16:16:50: DEBUG   : Found record ('CC', '0', '0', '0')
+16:16:50: DEBUG   : check_record_vs_spec: ['CC', '0', '0', '0', ' Following are the MWD raw data']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 5 <> 5
+16:16:50: DEBUG   : ROW  71: ['M7', '0', '1', '1', '2014:09:17:13:15:22.0', '1', ' 1740.000000', '36.000000', '75.430000', ' 41.920000', '158.750000', '1705.160000', ' 1', '4.177509', '3.972274', '7.934024', ' 10182.629900', '36850.997600', '52571.987760', '9.807103', '65003.814290', ' 71.921632', '304.220706', '-133.557428', ' 9.806986', '65094.495067', '71.939312', ' -2.000000', '0.000000', '']
+16:16:50: DEBUG   : Found record ('M7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['M7', '0', '1', '1', '2014:09:17:13:15:22.0', '1', ' 1740.000000', '36.000000', '75.430000', ' 41.920000', '158.750000', '1705.160000', ' 1', '4.177509', '3.972274', '7.934024', ' 10182.629900', '36850.997600', '52571.987760', '9.807103', '65003.814290', ' 71.921632', '304.220706', '-133.557428', ' 9.806986', '65094.495067', '71.939312', ' -2.000000', '0.000000', '']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{:d},{},{:d}, {:f},{:f},{:f}, {:f},{:f},{:f}, {:d},{:f},{:f},{:f}, {:f},{:f},{:f},{:f},{:f}, {:f},{:f},{:f}, {:f},{:f},{:f}, {:f},{:f},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 30 <> 30
+16:16:50: DEBUG   : set_rec_M7_MWD_Raw_Sensor_Data_Record ROW: ['M7', '0', '1', '1', '2014:09:17:13:15:22.0']
+16:16:50: DEBUG   : ROW  72: ['M7', '0', '1', '1', '2014:09:17:13:15:22.0', '1', ' 1740.000000', '36.000000', '75.430000', ' 41.920000', '158.750000', '1705.160000', ' 1', '4.177509', '3.972274', '7.934024', ' 10182.629900', '36850.997600', '52571.987760', '9.807103', '65003.814290', ' 71.921632', '304.220706', '-133.557428', ' 9.806986', '65094.495067', '71.939312', ' -2.000000', '0.000000', '']
+16:16:50: DEBUG   : Found record ('M7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['M7', '0', '1', '1', '2014:09:17:13:15:22.0', '1', ' 1740.000000', '36.000000', '75.430000', ' 41.920000', '158.750000', '1705.160000', ' 1', '4.177509', '3.972274', '7.934024', ' 10182.629900', '36850.997600', '52571.987760', '9.807103', '65003.814290', ' 71.921632', '304.220706', '-133.557428', ' 9.806986', '65094.495067', '71.939312', ' -2.000000', '0.000000', '']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{:d},{},{:d}, {:f},{:f},{:f}, {:f},{:f},{:f}, {:d},{:f},{:f},{:f}, {:f},{:f},{:f},{:f},{:f}, {:f},{:f},{:f}, {:f},{:f},{:f}, {:f},{:f},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 30 <> 30
+16:16:50: DEBUG   : set_rec_M7_MWD_Raw_Sensor_Data_Record ROW: ['M7', '0', '1', '1', '2014:09:17:13:15:22.0']
+16:16:50: DEBUG   : ROW  73: ['M7', '0', '1', '1', '2014:09:17:13:15:22.0', '1', ' 1740.000000', '36.000000', '75.430000', ' 41.920000', '158.750000', '1705.160000', ' 1', '4.177509', '3.972274', '7.934024', ' 10182.629900', '36850.997600', '52571.987760', '9.807103', '65003.814290', ' 71.921632', '304.220706', '-133.557428', ' 9.806986', '65094.495067', '71.939312', ' -2.000000', '0.000000', '']
+16:16:50: DEBUG   : Found record ('M7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['M7', '0', '1', '1', '2014:09:17:13:15:22.0', '1', ' 1740.000000', '36.000000', '75.430000', ' 41.920000', '158.750000', '1705.160000', ' 1', '4.177509', '3.972274', '7.934024', ' 10182.629900', '36850.997600', '52571.987760', '9.807103', '65003.814290', ' 71.921632', '304.220706', '-133.557428', ' 9.806986', '65094.495067', '71.939312', ' -2.000000', '0.000000', '']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{:d},{},{:d}, {:f},{:f},{:f}, {:f},{:f},{:f}, {:d},{:f},{:f},{:f}, {:f},{:f},{:f},{:f},{:f}, {:f},{:f},{:f}, {:f},{:f},{:f}, {:f},{:f},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 30 <> 30
+16:16:50: DEBUG   : set_rec_M7_MWD_Raw_Sensor_Data_Record ROW: ['M7', '0', '1', '1', '2014:09:17:13:15:22.0']
+16:16:50: DEBUG   : ROW  74: []
+16:16:50: DEBUG   : ROW  75: ['CC', '0', '0', '0', ' Following are the Gyro raw data']
+16:16:50: DEBUG   : Found record ('CC', '0', '0', '0')
+16:16:50: DEBUG   : check_record_vs_spec: ['CC', '0', '0', '0', ' Following are the Gyro raw data']
+16:16:50: DEBUG   : Record fmt: {},{},{},{},{}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 5 <> 5
+16:16:50: DEBUG   : ROW  76: ['G7', '0', '2', '1', '2014:09:17:13:15:22.0', '1', ' 1740.000000', '36.000000', '75.000000', ' 42.480000', '158.540000', '1705.160000', ' 1', '4.179700', '3.969400', '7.933700', ' -1.008900', '10.314700', '-9.400300', '9.806650', '60.000000', '15.041000', ' 303.898400', '-133.522000', ' 9.806650', '60.000000', '15.041000', ' 0.000000', ' ']
+16:16:50: DEBUG   : Found record ('G7',)
+16:16:50: DEBUG   : check_record_vs_spec: ['G7', '0', '2', '1', '2014:09:17:13:15:22.0', '1', ' 1740.000000', '36.000000', '75.000000', ' 42.480000', '158.540000', '1705.160000', ' 1', '4.179700', '3.969400', '7.933700', ' -1.008900', '10.314700', '-9.400300', '9.806650', '60.000000', '15.041000', ' 303.898400', '-133.522000', ' 9.806650', '60.000000', '15.041000', ' 0.000000', ' ']
+16:16:50: DEBUG   : Record fmt: {},{:d},{:d},{:d},{},{:d}, {:f},{:f},{:f}, {:f},{:f},{:f}, {:d},{:f},{:f},{:f}, {:f},{:f},{:f},{:f},{:f},{:f}, {:f},{:f}, {:f},{:f},{:f}, {:f}, {}
+16:16:50: DEBUG   : Expected vs. Actual number of fields: 29 <> 29
+16:16:50: ERROR   : SURVEYREF not found: 2
+16:16:50: DEBUG   : ROW  77: []
+16:16:50: INFO    : 
+16:16:50: INFO    : Collecting entity objects for each survey...
+16:16:50: INFO    : 
+16:16:50: INFO    : SURVEYREF: 1: "Final Run"
+16:16:50: DEBUG   : SURVEY set_rig
+16:16:50: INFO    :   --> ZDPREF: 1: "Unknown Rig"
+16:16:50: DEBUG   : SURVEY set_wellbore
+16:16:50: INFO    :   --> WELLBOREREF: 1: "207/29-2Z"
+16:16:50: DEBUG   : SURVEY set_well
+16:16:50: INFO    :     --> WELLREF: 1: "207/29-A6"
+16:16:50: DEBUG   : SURVEY set_structure
+16:16:50: INFO    :       --> STRUCTUREREF: 1: "Pad A"
+16:16:50: DEBUG   : SET geomagnetic model ROW: ['H7', '5', '0', '0', 'Geomagnetic Model Definition                      ']
+16:16:50: INFO    :       --> MAGREF: 1: "IGRF1972"
+16:16:50: DEBUG   : SET gravimetric model ROW: ['H7', '5', '0', '0', 'Geomagnetic Model Definition                      ']
+16:16:50: INFO    :       --> GRAVREF: 1: "Single Point Supplied for Survey by Operator"
+16:16:50: ERROR   : dont forget... implement some checks here like same reference to same objects; fields filled out; etc.
+16:16:50: INFO    : 
+16:16:50: INFO    : Creating a human readable report for each survey in the p717 file...
+16:16:50: INFO    : 
+16:16:50: ERROR   : Need to change this to loop over POSLOG and link to Surveys associated...
+16:16:50: ERROR   : Need to change this to loop over POSLOG and link to Surveys associated...
+16:16:50: INFO    : SURVEYREF: 1: Final Run
+16:16:50: INFO    :   Creating output file: p717reader-survey1_2018-08-30.txt
+16:16:50: DEBUG   : getSRP
+16:16:50: DEBUG   : printing variables of fixed object
+16:16:50: DEBUG   : getWRP
+16:16:50: DEBUG   : printing variables of fixed object
