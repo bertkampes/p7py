@@ -1,0 +1,123 @@
+==================================================================
+This is a human readable output report for an IOGP p717 file
+Created by p717reader.py on 2019-06-23 22:38:20.348603
+input file: ..\2018-06-23 USER GUIDE\testdata\P717 User Guide example A.20190622.p717 SURVEYREF: 1
+p717reader spec draft v0.8 2017-12-25 provided AS-IS for demonstration purposes
+==================================================================
+
+------------------------------------------------------------------
+PROJECT/:
+------------------------------------------------------------------
+Company:                   unknown
+Project Name:              BETA FIELD
+Structure:                 DELTA SITE
+Well:                      ALPHA 01                           UWI:  4220112345
+Wellbore:                  WB00                               UWBI: 422011234500
+Survey name:               WIRELINE GYRO CONTINUOUS
+Survey type:               Gyro
+
+RIG/WORKOVER:              Unknown Rig
+TVD Reference (ZDP):       DF 2626.0 (None) above VRS
+MD Reference (ZDP):        DF 2626.0 (None) above VRS
+North Reference:           AZ_GRID
+
+PROJECT CRS:                    unknown
+
+
+------------------------------------------------------------------
+STRUCTURE/SITE: DELTA SITE
+------------------------------------------------------------------
+Coordinates and Accuracy of SRP:
+
+WOBJ 1: SRP 
+----------------------------------------
+  CRS A name:    unknown CRS A
+  CRS_A_coords:  ('718541.26', '3151622.18', '-2600.00')
+  CRS B name:    self.CRS_B_name
+  CRS_B_coords:  ('29.7604000', '-95.3698000')
+  CRS C name:    unknown CRS C
+  CRS_C_coords:  ('29.7606281', '-95.3700161')
+  hor_radial_uncertainty: 2.0 (self.hor_uncertainty_unit)
+  hor_radial_confidence:  1-sigma
+
+
+------------------------------------------------------------------
+WELL/SLOT: ALPHA 01
+------------------------------------------------------------------
+Coordinates and Accuracy of WRP:
+
+WOBJ 2: WRP on Wellpad
+----------------------------------------
+  CRS A name:    unknown CRS A
+  CRS_A_coords:  ('718535.81', '3151657.82', '-2600.00')
+  CRS B name:    self.CRS_B_name
+  CRS_B_coords:  ('29.7603820', '-95.3696883')
+  CRS C name:    unknown CRS C
+  CRS_C_coords:  ('29.7606101', '-95.3699043')
+  hor_radial_uncertainty: 2.0 (self.hor_uncertainty_unit)
+  hor_radial_confidence:  1-sigma
+
+
+------------------------------------------------------------------
+WELLBORE: WB00
+------------------------------------------------------------------
+Sidetrack?                 TO DO ********************
+
+GEOPHYSICAL REFERENCE VALUES:
+-----------------------------
+Magnetic model:          not specified
+Gravity model:          not specified
+
+------------------------------------------------------------------
+SURVEY: WIRELINE GYRO CONTINUOUS
+------------------------------------------------------------------
+Survey date:               2018:02:05
+Survey MD start:           50.0
+Survey MD end:             10950.0
+
+Survey Calculation Method: looking for min. curvature somewhere...
+Survey Calculation Method: GNL
+
+
+-------------------
+SURVEY PROGRAM + ERROR MODEL:
+-------------------
+to do: print error model fromMD to MD, or show/get it from the P7 Table.
+
+
+-------------------
+SURVEY Table
+-------------------
+Project CRS: unkn unkn
+
+MD       INC   AZ     n       e       d        Northing   Easting    Depth   Latitude    Longitude   
+MDunit   deg   deg    MDunit  MDunit  MDunit   projCRSunit projCRSunit vertCRSunit deg         deg         
+------------------------------------------------------------------------
+    0.00  0.00   0.00 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000 ZDP Other
+   26.00  0.00   0.01 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000 WRP Other
+   50.00  0.28   4.80 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000   D Surveyed
+   75.00  0.47   4.60 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000   D Surveyed
+  100.00  0.53   4.18 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000   D Surveyed
+  125.00  0.58   3.85 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000   D Surveyed
+  150.00  0.63   3.57 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000   D Surveyed
+  175.00  0.70   1.34 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000   D Surveyed
+10850.04 45.66 229.13 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000   D Surveyed
+10875.04 48.70 228.43 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000   D Surveyed
+10900.04 51.83 228.29 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000   D Surveyed
+10925.04 55.02 228.11 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000   D Surveyed
+10950.04 58.30 227.35 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000   D Surveyed
+10991.00 58.30 227.35 -99999.00 -99999.00 -99999.00  -99999.00  -99999.00 -99999.00 -99999.0000000 -99999.0000000 BHL Projected
+
+
+----------------------------------------------------------------------
+Casing Points
+   DESIGN - lookup casing points from point table in p717.  There is a record that allows writing this...
+
+Formations
+   - Formations lookup from point table in p717
+
+----------------------------------------------------------------------
+
+SURVEY RAW DATA
+
+

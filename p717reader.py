@@ -113,31 +113,35 @@ if file_extension.lower()!="p717":
 ###########################################################
 ### Create dictionaries with key: value pairs; where key=REF and value=object;
 ###########################################################
-#dictUNIT      = {} # Unit of Measure;  add to existing dictUNITREF hard-coded
+#dictUNIT      = {} # Unit of Measure;  add to existing hardcoded dictUNITREF with user-defined units
 dictCRS       = {} # Coordinate Reference System
 dictCT        = {} # Coordinate Transformation
 
 ### These are the main lookups to the objects
-Project       = None # only one PROJECT in a p717 allowed, created for IOGP record identificatin record
-n_PROJECTs    = 0  # Count number of Project Name records
+Project       = None # only one PROJECT in a p717 allowed, created for IOGP record identification record
+n_PROJECTs    = 0  # Count number of Project Name records (IOGP record)
 dictSTRUCTURE = {} # dictionary of structures, key=STRUCTUREREF, value=OBJECT
 dictWELL      = {} # ...
 dictWELLBORE  = {}
 dictSURVEY    = {}
 dictRIG       = {}
-dictWOBJ      = {} # O7 records; H7,4,0,0 ### Well Object Points
-dictPOSLOG    = {} # H7,6,5,0 calculated values
+dictWOBJ      = {} # O7 records; H7,4,0,0
+dictP7TABLE   = {} # H7,5,0,0
+
+### Measurement Tools (expect 0 unless raw data)
+dictMTREF     = {}
 
 ### Magnetic and Gravity models (expect 1)
 dictMAGREF    = {}
 dictGRAVREF   = {}
 
-dictMTREF     = {}  # to do - add Measurement Tools.  These can be found in Survey Definition and may be 
+### Standard Error Model: (not used - expect format implicit OWSG definition for now in the sample program)
+dictSTEMREF   = {}
+
 
 ###########################################################
-### First pass over p717 file: fill dictionaries for mandatory objects;
+### First pass over p717 file: fill dictionaries for main entities (generally mandatory objects);
 ###########################################################
-
 logging.info("")
 logging.info("First pass over file to get main object entities...")
 inputfilestream = open(inputfile, newline='')
@@ -167,6 +171,7 @@ for row in reader:
         key = safe_cast_to_int(row,5)
         logging.debug("Found CRSREF:                              %s", key)
         dictCRS[key]=CRS(row) #create object with constructor
+
     ### CT
     elif is_record(row, rec_CT_Implicit_Identification):
         key = safe_cast_to_int(row,5)
@@ -179,23 +184,17 @@ for row in reader:
         logging.debug("Found Structure Definition STRUCTUREREF:   %s", key)
         dictSTRUCTURE[key]=STRUCTURE(row) #create object with constructor
 
-    ### WELL Identification
+    ### WELL Definition
     elif is_record(row, rec_Well_Definition):
         key = safe_cast_to_int(row,5)
         logging.debug("Found well identification WELLREF:         %s", key)
         dictWELL[key]=WELL(row) #create object with constructor
 
-    ### WELLBORE Identification: links back to a well
+    ### WELLBORE Definition: links back to a well
     elif is_record(row, rec_Wellbore_Definition):
         key = safe_cast_to_int(row,5)
         logging.debug("Found Wellbore Identification WELLBOREREF: %s", key)
         dictWELLBORE[key]=WELLBORE(row)
-
-    ### SURVEY Definition: links back to a wellbore and rig
-    elif is_record(row, rec_Survey_Definition):
-        key = safe_cast_to_int(row,5)
-        logging.debug("Found Survey Definition SURVEYREF:         %s", key)
-        dictSURVEY[key]=SURVEY(row)
 
     ### RIG Definition: links back to a structure and a survey
     elif is_record(row, rec_Rig_Definition):
@@ -203,40 +202,59 @@ for row in reader:
         logging.debug("Found Rig Details ZDPREF:                  %s", key)
         dictRIG[key]=RIG(row)
 
+    ### SURVEY Definition: links back to a wellbore and rig
+    elif is_record(row, rec_Survey_Definition):
+        key = safe_cast_to_int(row,5)
+        logging.debug("Found Survey Definition SURVEYREF:         %s", key)
+        dictSURVEY[key]=SURVEY(row)
+
+    ### MTREF: Measurement Tool (mandatory for raw data). Collected in dict. 
+    elif is_record(row, rec_Measurement_Tool_Definition):
+        key = safe_cast_to_int(row,5)
+        logging.debug("Found MTREF definition:               %s", key)
+        dictMTREF[key]=MT(row) # store row, associate with Survey later
+        
+    ### MAGREF: Magnetic model. Collected in dict for now.  They should be class.  Associated with survey below 
+    elif is_record(row, rec_Geomagnetic_Model_Definition): 
+        key = safe_cast_to_int(row,5)
+        logging.debug("Found MAGREF definition:               %s", key)
+        dictMAGREF[key]=row # store row, associate with Survey below
+    
+    ### GRAVREF: Gravity model. Collected in dict for now.  They should be class.  Associated with survey below 
+    elif is_record(row, rec_Gravity_Model_Definition):
+        key = safe_cast_to_int(row,5)
+        logging.debug("Found GRAVREF definition:               %s", key)
+        dictGRAVREF[key]=row # store row, associate with Survey below
+
     ### WOBJ : Well Object Definition: e.g., WRP
     elif is_record(row, rec_Position_Object_Definition):
         key = safe_cast_to_int(row,5)
         logging.debug("Found Well Object WOBJREF:                 %s", key)
         dictWOBJ[key]=WOBJ(row)
 
-    ### POSLOG: Position Log Record Type Definition
-    elif is_record(row, rec_Position_Log_Type_Definition):
+    ### P7TABLE: Data Record Type Definition
+    elif is_record(row, rec_P7_Table_Definition):
         key = safe_cast_to_int(row,5)
-        logging.debug("Found POSLOGTYPE definition:               %s", key)
-        dictPOSLOG[key]=POSLOG(row)
+        logging.debug("Found P7 Table definition:               %s", key)
+        dictP7TABLE[key]=P7TABLE(row)
 
-    ### MAGREF
-    elif is_record(row, rec_Geomagnetic_Model_Definition): 
+    ### STEMREF: Error Models. Collected in dict.  They should be class 
+    elif is_record(row, rec_Survey_Tool_Error_Model_Definition):
         key = safe_cast_to_int(row,5)
-        logging.debug("Found MAGREF definition:               %s", key)
-        dictMAGREF[key]=row # store row, associate with Survey later
-    
-    ### GRAVREF
-    elif is_record(row, rec_Gravity_Model_Definition):
-        key = safe_cast_to_int(row,5)
-        logging.debug("Found GRAVREF definition:               %s", key)
-        dictGRAVREF[key]=row # store row, associate with Survey later
+        logging.debug("Found STEMREF definition:               %s", key)
+        logging.warning("Found STEMREF definition: this record is not handled in this example reader")
+        dictSTEMREF[key]=row # store row, associate with Survey below
 
-
-
+        
+        
 
 ###########################################################
 ### Perform some checks on the found objects
 ###########################################################
 n_crss       = len(dictCRS)
 n_cts        = len(dictCT)
-logging.debug('Number of CRSs defined:       %s', n_crss)
-logging.debug('Number of CTs defined:        %s', n_cts)
+logging.debug('Number of CRS definitions found:              %s', n_crss)
+logging.debug('Number of CT definitions found:               %s', n_cts)
 if n_crss<2:
     logging.critical("Not enough CRSs defined") # assume Hor + Vert min.
 if n_cts<1:
@@ -245,18 +263,24 @@ if n_cts<1:
 
 ### Well Objects
 n_wobjs  = len(dictWOBJ)
-logging.debug('Number of well objects defined: %s', n_wobjs)
+logging.debug('Number of well object definitions found:      %s', n_wobjs)
 if n_wobjs<1:
     logging.critical("Not enough Well Objects defined")
 logging.debug("debug overview of WOBJREF:")
 for key in dictWOBJ:
     logging.debug("%d: %s (%s)", dictWOBJ[key].WOBJREF, dictWOBJ[key].wobj_short_name, dictWOBJ[key].wobj_type_name)
-    
+
+### Non-mandatory objects
+logging.debug('Number of Measurement Tool definitions found: %s', len(dictMTREF))
+logging.debug('Number of Magnetic Model definitions found:   %s', len(dictMAGREF))
+logging.debug('Number of Gravity Model definitions found:    %s', len(dictGRAVREF))
+logging.debug('Number of Tool Error Model definitions found: %s', len(dictSTEMREF))
+
 ### Record Type Definitions
-n_poslog = len(dictPOSLOG)
-logging.debug('Number of poslogtypes defined: %s', n_poslog)
-if n_poslog<1:
-    logging.critical("Not enough n_poslog defined")
+n_p7table = len(dictP7TABLE)
+logging.debug('Number of P7 Tables defined: %s', n_p7table)
+if n_p7table<1:
+    logging.critical("Not enough n_p7table defined")
 
 
 ### Main entities
@@ -298,6 +322,7 @@ if n_structures>n_wells:
     logging.warning("More structures than wells found")
 
 
+    
 
 ##################################################################################
 ### Second pass: fill SURVEY objects with details
@@ -322,23 +347,6 @@ for row in reader:
     if row_count<1000: logging.debug("ROW %s: %s", '{:3d}'.format(row_count), row)
     ###
     if is_record  (row, rec_IOGP_File_Identification_Record): True # Already dealt with during first pass to construct PROJECT object
-    elif is_record(row, rec_Project_Name):
-        Project.set_rec_Project_Name(row)
-    elif is_record(row, rec_Structure_Definition):      True # Already dealt with in first pass to construct STRUCTURE object
-    elif is_record(row, rec_Well_Definition): True # Already dealt with during first pass to construct WELL object
-    elif is_record(row, rec_Wellbore_Definition): True     # Already dealt with in first pass to construct WELLBORE object
-    elif is_record(row, rec_Rig_Definition): True          # Already dealt with in first pass to construct RIG object
-    elif is_record(row, rec_Survey_Definition): True       # Already dealt with in first pass to construct SURVEY object
-
-    elif is_record(row, rec_Operator_Survey_Contractor_Acqn):
-        key = safe_cast_to_int(row,5)
-        if key>=0: dictSURVEY[key].set_rec_Operator_Survey_Contractor_Acqn(row)
-    elif is_record(row, rec_Operator_Survey_Contractor_Proc):
-        key = safe_cast_to_int(row,5)
-        if key>=0: dictSURVEY[key].set_rec_Operator_Survey_Contractor_Proc(row)
-    elif is_record(row, rec_Positioning_Contractor):
-        key = safe_cast_to_int(row,6)
-        if key>=0: dictWELL[key].set_rec_Positioning_Contractor(row)
 
     ### Full implementation should deal with units but leave it for now as we don't expect users to define them
     elif is_record(row, rec_Unit_Of_Measure_Definition): True
@@ -352,12 +360,12 @@ for row in reader:
         if key>=0: dictCRS[key].set_rec_CRS_details(row)
 
     ### Compound CRS: assume components CRSs and their CSs have been defined (otherwise set this after parsing full file...)
-    elif is_record(row, rec_Compound_CRS_Horizontal_Identification):
-        key = safe_cast_to_int(row,5)
-        if key>=0: dictCRS[key].set_rec_Compound_CRS_Horizontal_Identification(row,dictCRS)
-    elif is_record(row, rec_Compound_CRS_Vertical_Identification):
-        key = safe_cast_to_int(row,5)
-        if key>=0: dictCRS[key].set_rec_Compound_CRS_Vertical_Identification(row,dictCRS)
+    #elif is_record(row, rec_Compound_CRS_Horizontal_Identification):
+    #    key = safe_cast_to_int(row,5)
+    #    if key>=0: dictCRS[key].set_rec_Compound_CRS_Horizontal_Identification(row,dictCRS)
+    #elif is_record(row, rec_Compound_CRS_Vertical_Identification):
+    #    key = safe_cast_to_int(row,5)
+    #    if key>=0: dictCRS[key].set_rec_Compound_CRS_Vertical_Identification(row,dictCRS)
 
     ### Ignore projection parameters etc. for this reader program for now.
     ### Proper implementation should read these.
@@ -366,7 +374,7 @@ for row in reader:
     elif is_record(row, rec_Prime_Meridian_Details): True
     elif is_record(row, rec_Ellipsoid_Details): True
     elif is_record(row, rec_Vertical_Datum_Details): True
-    elif is_record(row, rec_Engineering_Datum_Details): True
+    #elif is_record(row, rec_Engineering_Datum_Details): True
     elif is_record(row, rec_Map_Projection_Details): True
     elif is_record(row, rec_Projection_Method_Details): True
     elif is_record(row, rec_Projection_Parameter_Details): True
@@ -375,10 +383,12 @@ for row in reader:
     elif is_record(row, rec_Coordinate_System_Details):
         key = safe_cast_to_int(row,5)
         if key>=0: dictCRS[key].set_rec_Coordinate_System_Details(row)
-    ###
     elif is_record(row, rec_Coordinate_Axis_Details):
         key = safe_cast_to_int(row,5)
         if key>=0: dictCRS[key].set_rec_Coordinate_Axis_Details(row)
+    elif is_record(row, rec_Coordinate_Axis_Conversion_Applied):
+        key = safe_cast_to_int(row,5)
+        if key>=0: dictCRS[key].set_rec_Coordinate_Axis_Conversion_Applied(row)
 
     ### Parse CT details
     elif is_record(row, rec_CT_Implicit_Identification): True # already dealt with in first pass to create CT objects
@@ -403,13 +413,14 @@ for row in reader:
     elif is_record(row, rec_Additional_Information):    True
     elif is_record(row, rec_Additional_Information_C7): True
 
-    ### File Contents
-    elif is_record(row, rec_File_Contents_Description): 
-        Project.set_rec_File_Contents_Description(row)
-    elif is_record(row, rec_File_Processing_Details):
-        Project.set_rec_File_Processing_Details(row)
-    elif is_record(row, rec_File_Contents_Attribute):   True # ignore for now.
 
+    ### P7 Specific header ###
+    ### Project
+    elif is_record(row, rec_Project_Information):
+        Project.set_rec_Project_Information(row)
+    
+    ### Structure
+    elif is_record(row, rec_Structure_Definition):      True # Already dealt with in first pass to construct STRUCTURE object
     ### Structure Details
     elif is_record(row, rec_Structure_Details):
         key = safe_cast_to_int(row,5)
@@ -420,6 +431,8 @@ for row in reader:
         else:
             logging.error("STRUCTUREREF not found: %i", key)
 
+    ### Well
+    elif is_record(row, rec_Well_Definition): True # Already dealt with during first pass to construct WELL object
     ### Well_Details
     elif is_record(row, rec_Well_Details):
         key = safe_cast_to_int(row,5)
@@ -429,17 +442,19 @@ for row in reader:
             dictWELL[key].set_rec_Well_Details(row)
         else:
             logging.error("WELLREF not found: %i", key)
+    ### Positioning contractor
+    elif is_record(row, rec_Positioning_Contractor):
+        key = safe_cast_to_int(row,6)
+        if key>=0: dictWELL[key].set_rec_Positioning_Contractor(row)
 
-    # ### Rig Details
-    # elif is_record(row, rec_Rig_Details):
-        # key = safe_cast_to_int(row,5)
-        # logging.debug("Found ZDP Rig details for Rig:               %s", key)
-        # #if key>=0: dictRIG[key].set_rec_Rig_Details(row)
-        # if key in dictRIG: 
-            # dictRIG[key].set_rec_Rig_Details(row)
-        # else:
-            # logging.error("ZDPREF not found: %i", key)
-
+    ### Wellbore
+    elif is_record(row, rec_Wellbore_Definition): True     # Already dealt with in first pass to construct WELLBORE object
+    
+    ### Rig
+    elif is_record(row, rec_Rig_Definition): True          # Already dealt with in first pass to construct RIG object
+    
+    ### Survey
+    elif is_record(row, rec_Survey_Definition): True       # Already dealt with in first pass to construct SURVEY object
     ### Survey Details
     elif is_record(row, rec_Survey_Details):
         key = safe_cast_to_int(row,5)
@@ -448,28 +463,33 @@ for row in reader:
             dictSURVEY[key].set_rec_Survey_Details(row)
         else:
             logging.error("SURVEYREF not found: %i", key)
-    
-    ### Survey Tie Point    
-    elif is_record(row, rec_Survey_Tie_Point_Details):
+
+    ### Survey Contractor
+    elif is_record(row, rec_Operator_Survey_Contractor):
         key = safe_cast_to_int(row,5)
-        #if key>=0: dictSURVEY[key].set_rec_Survey_Tie_Point_Details(row)
-        if key in dictSURVEY: 
-            dictSURVEY[key].set_rec_Survey_Tie_Point_Details(row)
-        else:
-            logging.error("SURVEYREF not found: %i", key)
+        if key>=0: dictSURVEY[key].set_rec_Operator_Survey_Contractor(row)
+
             
     ### Measurement Tool
-    elif is_record(row, rec_Measurement_Tool_Definition):   
+    elif is_record(row, rec_Measurement_Tool_Definition):           ### THIS SHOULD BE IN FIRST LOOP TO COLLECT OBJECTS 
+        True                                                        # Already dealt with in first pass
         logging.debug("ignoring Measurement Tool for now")
-    elif is_record(row, rec_Measurement_Tool_Attributes):    True
     
-    ### Position Objects
-    elif is_record(row, rec_Position_Object_Definition):     True # Already dealt with in first pass to construct WOBJ object
-    elif is_record(row, rec_Well_Object_Attributes):         True
-        
     ### Geomagnetic and Gravity Model
     elif is_record(row, rec_Geomagnetic_Model_Definition):   True # Deal with in first pass, associate with survey below.
     elif is_record(row, rec_Gravity_Model_Definition):       True # Deal with in first pass, associate with survey below.
+
+    ### Position Objects
+    elif is_record(row, rec_Position_Object_Definition):     True # Already dealt with in first pass to construct WOBJ object
+    elif is_record(row, rec_Position_Object_Attribute):      True # ifnore for now; would need to be properly parsed.
+        
+    ### P7 Table (MDINCAZ observables and calculated values)
+    elif is_record(row, rec_P7_Table_Definition):   True # Already dealt with in first pass
+
+    ### Survey Tool Error Model (STEM)
+    elif is_record(row, rec_Survey_Tool_Error_Model_Definition): True # Already dealt with in first pass
+    elif is_record(row, rec_Survey_Tool_Error_Model_Metadata):   True # ignore for now; don't interpret
+    elif is_record(row, rec_Survey_Tool_Error_Model_Terms):      True # ignore for now; don't interpret
 
     ### MWD Extension Field Definition
     elif is_record(row, rec_M7_Record_Extension_Definition): 
@@ -480,16 +500,9 @@ for row in reader:
     elif is_record(row, rec_G7_Record_Extension_Definition): 
         key = safe_cast_to_int(row,5)
         dictSURVEY[key].set_rec_G7_Record_Extension_Definition(row)
+
         
-    ### Position log (MDINCAZ observables and calculated values)
-    elif is_record(row, rec_Position_Log_Type_Definition):   True # Already dealt with in first pass to construct POSLOGTYPE objects
-
-    ### Survey Tool Error Model (STEM)
-    elif is_record(row, rec_Survey_Tool_Error_Model_Definition): True
-    elif is_record(row, rec_Survey_Tool_Error_Model_Metadata):   True
-    elif is_record(row, rec_Survey_Tool_Error_Model_Terms):      True
-
-    ### Data records (O7, P7, M7, G7)
+    ### Data records (O7, P7, M7, G7) ###
 
     ### O7 Position Object
     elif is_record(row, rec_O7_Position_Record):
@@ -499,13 +512,13 @@ for row in reader:
         else:
             logging.error("WOBJREF not found: %i", key)
             
-    ### P7 Position Log
-    elif is_record(row, rec_P7_Position_Log_Record):
+    ### P7 Table (data records)
+    elif is_record(row, rec_P7_Data_Record):
         key = safe_cast_to_int(row,2) # SURVEYREF
-        if key in dictPOSLOG: 
-            dictPOSLOG[key].set_rec_P7_Position_Log_Record(row)
+        if key in dictP7TABLE: 
+            dictP7TABLE[key].set_rec_P7_Data_Record(row)
         else:
-            logging.error("POSLOGREF not found: %i", key)
+            logging.error("P7TABLEREF not found: %i", key)
             
     ### M7 Raw MWD Sensor data
     elif is_record(row, rec_M7_MWD_Raw_Sensor_Data_Record):
@@ -598,7 +611,7 @@ for SURVEYREF in dictSURVEY:
 ###   WELLBORE
 ###   RIG
 ###   SURVEY
-###   POSLOG table
+###   P7TABLE table
 ###########################################################
 logging.info("")
 logging.info("Creating a human readable report for each survey in the p717 file...")
@@ -606,11 +619,11 @@ logging.info("")
 
 import datetime
 
-logging.error("Need to change this to loop over POSLOG and link to Surveys associated...")
-logging.error("Need to change this to loop over POSLOG and link to Surveys associated...")
+logging.error("Need to change this to loop over P7TABLE and link to Surveys associated...")
+logging.error("Need to change this to loop over P7TABLE and link to Surveys associated...")
 
 #keys = 
-Poslog = dictPOSLOG[1] # for quick fix, hope there is a one..
+P7Table = dictP7TABLE[1] # for quick fix, hope there is a one..
 for SURVEYREF in dictSURVEY:
 
     ### Open output file
@@ -658,15 +671,15 @@ for SURVEYREF in dictSURVEY:
     ### PROJECT
     PROJECTCRS_name = "unknown"
     
-    if Project.projectCRS_CRSREF!=None: #may be the case if no POSLOG!
+    if Project.projectCRS_CRSREF!=None: #may be the case if no P7TABLE!
         PROJECTCRS_name = dictCRS[Project.projectCRS_CRSREF].get_crs_name()
 
     outfh.write("PROJECT CRS:                    {}\n".format(PROJECTCRS_name))
     # For compound, list components
-    if dictCRS[Project.projectCRS_CRSREF].CRS_name_hor!=None:
-        outfh.write("  Horizontal:                 {}\n".format(dictCRS[Project.projectCRS_CRSREF].CRS_name_hor))
-    if dictCRS[Project.projectCRS_CRSREF].CRS_name_vert!=None:
-        outfh.write("  Vertical:                   {}\n".format(dictCRS[Project.projectCRS_CRSREF].CRS_name_vert))
+    #if dictCRS[Project.projectCRS_CRSREF].CRS_name_hor!=None:
+    #    outfh.write("  Horizontal:                 {}\n".format(dictCRS[Project.projectCRS_CRSREF].CRS_name_hor))
+    #if dictCRS[Project.projectCRS_CRSREF].CRS_name_vert!=None:
+    #    outfh.write("  Vertical:                   {}\n".format(dictCRS[Project.projectCRS_CRSREF].CRS_name_vert))
     outfh.write("\n")
     outfh.write("\n")
 
@@ -731,9 +744,9 @@ for SURVEYREF in dictSURVEY:
     outfh.write("Survey MD end:             {}\n".format(Survey.MD_end))
     outfh.write("\n")
     
-    ### POSLOG
+    ### P7TABLE
     outfh.write("Survey Calculation Method: {}\n".format("looking for min. curvature somewhere..."))
-    outfh.write("Survey Calculation Method: {}\n".format(Poslog.LOCAL2GLOBAL_name))
+    outfh.write("Survey Calculation Method: {}\n".format(P7Table.LOCAL2GLOBAL_name))
     outfh.write("\n")
 
     # Grid Convergence:
@@ -743,7 +756,7 @@ for SURVEYREF in dictSURVEY:
         # for row in Survey.gc_applied:
             # outfh.write("Grid Convergence applied: {}: {} {} = {} (deg)\n".format(row[9], row[10], row[11], row[12]))
     # elif Survey.gc_where_defined==2:
-        # outfh.write("Grid Convergence applied:     {}\n".format("defined in poslog"))
+        # outfh.write("Grid Convergence applied:     {}\n".format("defined in P7 Table"))
     # elif Survey.gc_where_defined==3:
         # outfh.write("Grid Convergence applied:     {}\n".format("defined in rawdata log"))
     # else:
@@ -756,7 +769,7 @@ for SURVEYREF in dictSURVEY:
         # for row in Survey.sf_applied:
             # outfh.write("Scale Factor(s) applied:  {}: {} {} {}: sf={} ef={}\n".format(row[9], row[10], row[11], row[12], row[13], row[14]))
     # elif Survey.sf_where_defined==2:
-        # outfh.write("Scale Factor applied:         {}\n".format("defined in poslog"))
+        # outfh.write("Scale Factor applied:         {}\n".format("defined in P7 Table"))
     # else:
         # logging.error("not possible")
 
@@ -765,15 +778,15 @@ for SURVEYREF in dictSURVEY:
     outfh.write("-------------------\n")
     outfh.write("SURVEY PROGRAM + ERROR MODEL:\n")
     outfh.write("-------------------\n")
-    outfh.write("to do: print error model fromMD to MD, or show/get it from the poslog.\n")
+    outfh.write("to do: print error model fromMD to MD, or show/get it from the P7 Table.\n")
     outfh.write("\n")
     outfh.write("\n")
 
     ### Get the p7 records and print it (use a function?)
     outfh.write("-------------------\n")
-    outfh.write("SURVEY POSITION LOG\n")
+    outfh.write("SURVEY Table\n")
     outfh.write("-------------------\n")
-    Poslog.report_poslog(outfh)
+    P7Table.report_p7table(outfh)
     outfh.write("\n")
 
 

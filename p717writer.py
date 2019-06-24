@@ -47,6 +47,15 @@ def usage():
 
 
 
+logging.warning("writer program has not been updated yet... for draft 099c")
+logging.warning("writer program has not been updated yet... for draft 099c")
+logging.warning("writer program has not been updated yet... for draft 099c")
+logging.warning("writer program has not been updated yet... for draft 099c")
+logging.warning("writer program has not been updated yet... for draft 099c")
+
+
+
+
 ###########################################################
 ### MAKE THIS INTO A MAIN(args) SOME DAY...
 ###########################################################
@@ -122,41 +131,13 @@ logging.warning("don't forget to reset these to empty strings! after testing - m
 logging.info("")
 logging.info("Creating empty p717 objects...")
 
-#row1  = "IOGP,IOGP P7,7,1.0,1,2017:03:25,17:40:01,Example.P717,".split(",")
-row11 = "HC,0,1,1,Project Name,Pegasus,Pegasus Field,Texas,United States,USA,NAD27 / Texas Central + NGVD29 depth (ftUS),4,ftUS,ftUS)".split(",")
-#row2  = "HC,0,2,1,Structure Definition,1,Pad A,SRP,1,Centre Slot A1,Onshore".split(",")
-#row3  = "HC,0,3,1,Well Definition,1,1,WRP,2,207/29-A6,207/29-A6,DTI,,,,As-drilled,UKCS Block 207/29,2012:05:15".split(",")
-#row4  = "HC,0,4,1,Wellbore Definition,1,1,207/29-2Z,207/29-2Z,OGA,,,,Existing,207/29,, ST=Y,1750.5,1,2012:06:01".split(",")
-#row5  = "HC,0,5,1,ZDP Rig/Workover Definition,1,Unknown Rig,KB,275.5,0.5, 8.5, 2011:01:01".split(",")
-#row6  = "HC,0,6,1,Survey Definition,1,1,1,Final Run,Gyro,2,Open Hole,7-5/8, In,1100.0,2150.0,ft,Grid North,,2012:07:01,2012:07:02".split(",")
-row61 = "HC,0,7,1,Operator/Survey Contractor (Acqn),1,Highland Oil,Tain Drilling,TD101,".split(",")
-row62 = "HC,0,7,2,Operator/Survey Contractor (Proc),1,Lowland Exploration and Production,Directional Services Inc,DS501,1994:04:15".split(",")
-
-Project   = PROJECT()
-Structure = STRUCTURE()
-Well      = WELL()
-Wellbore  = WELLBORE()
-Rig       = RIG()
-Survey    = SURVEY()
-
-#Project   = PROJECT(row1)
-Project.set_rec_Project_Name(row11)
-#Structure = STRUCTURE(row2)
-#Well      = WELL(row3)
-#Wellbore  = WELLBORE(row4)
-#Rig       = RIG(row5)
-#Survey    = SURVEY(row6)
-Survey.set_rec_Operator_Survey_Contractor_Acqn(row61)
-Survey.set_rec_Operator_Survey_Contractor_Proc(row62)
-
-
 ### Set Geodetic objects
 # interactive: provide EPSG codes of hor&vert - then parse the fields.
 row1  = "HC,1,3,0,CRS Number/EPSG Code/Name/Source                  ,1, 4326,WGS 84                          ,8.5,2014:06:27,EPSG,Global CRS for well object position records".split(",")
-row2  = "HC,1,3,0,CRS Number/EPSG Code/Name/Source                  ,2, 4230,ED50                            ,8.5,2014:06:27,EPSG,Used for Geographical coordinates in PosLog".split(",")
+row2  = "HC,1,3,0,CRS Number/EPSG Code/Name/Source                  ,2, 4230,ED50                            ,8.5,2014:06:27,EPSG,Used for Geographical coordinates in P7 Table".split(",")
 row3  = "HC,1,3,0,CRS Number/EPSG Code/Name/Source                  ,3,23031,ED50 / UTM zone 31N             ,8.5,2014:06:27,EPSG,Used for Structure and Displacements Origin CRS".split(",")
 row4  = "HC,1,3,0,CRS Number/EPSG Code/Name/Source                  ,4, 8051,MSL depth (ft),,,,                                   Used for Water Depth and TVD below VRS".split(",")
-row5  = "HC,1,3,0,CRS Number/EPSG Code/Name/Source                  ,5,     ,ED50 / UTM zone 31N + MSL depth (ft),,,,             Used for Compound CRS for Projected + TVD below VRS coordinates in PosLog and WRP".split(",")
+row5  = "HC,1,3,0,CRS Number/EPSG Code/Name/Source                  ,5,     ,ED50 / UTM zone 31N + MSL depth (ft),,,,             Used for Compound CRS for Projected + TVD below VRS coordinates in P7 Table and WRP".split(",")
 row31 = "HC,1,6,1,Coordinate System Axis 1                          ,3,1,1,Easting ,east ,E,1,metre".split(",")
 row32 = "HC,1,6,1,Coordinate System Axis 2                          ,3,2,2,Northing,north,N,1,metre".split(",")
 row41 = "HC,1,6,1,Coordinate System Axis 1                          ,4,1,214,Depth,down,D,15,foot".split(",")
@@ -181,27 +162,33 @@ dictCRS[5].set_rec_Compound_CRS_Vertical_Identification(row53,dictCRS)
 row = "HC,1,7,0,Transformation Number/EPSG Code/Name/Source       ,1,1311,ED50 to WGS 84 (18),8.5,2014:06:27,EPSG,".split(",")
 Cotrans = CT(row)
 
+
 ### P7 Header
-row1 = "H7,0,0,0,File Contents Description…,Definitive survey of 207/29-1Z wellbore from 2001,".split(",")
-row2 = "H7,0,1,0,Processing Details…       ,Reformatted to P7/17 format by Well Data Processors INC".split(",")
-#row3 = "H7,0,2,0,Legacy File Name…         ,3,207_29-1A.p72000,,".split(",")
-Project.set_rec_File_Contents_Description(row1)
-Project.set_rec_File_Processing_Details(row2)
+Project   = PROJECT()
+Structure = STRUCTURE()
+Well      = WELL()
+Wellbore  = WELLBORE()
+Rig       = RIG()
+Survey    = SURVEY()
 
-### P7 records (populated for test only) - to be replaced with empty strings, populated by p72000 read values.
-row1  = "H7,1,0,0,Structure Details,1,Top of template,192.0, 8021.4, 2011:06:21,0, True North,30.207".split(",")
-row2  = "H7,1,1,0,Well Details,1,Centre slot A1,Template installation report,A1,32.0,22, 15.0, 10.0".split(",")
-#row3  = "H7,1,3,0,ZDP Rig/Workover Details,1,64.5,64.5".split(",")
-row4  = "H7,1,4,0,Survey Details,1,1,1,MD-Drillpipe,1,Indicated Depth,1,8,AZ_GRID,3, Calculated from AZ_MAGN,1,2.151,-1.123,35342, 1972:06:28, 1,1.5, 9.807394,1,1".split(",")
-row41 = "H7,1,4,1,Survey Tie Point Details,1,2015.00,-2.50,1.30,2008.7".split(",")
+### Details
+### P7 records (populated randomly for format test only) - to be replaced with empty strings, populated by p72000 read values.
+row11 = "H7,1,0,0,Project Information,Pegasus,Pegasus Field,Texas,United States,USA".split(",")
+Project.set_rec_Project_Information(row11)
 
-
-
+row1  = "H7,1,1,1,Structure Details,1,Top of template,192.0, 8021.4, 2011:06:21,0, True North,30.207".split(",")
 Structure.set_rec_Structure_Details(row1)
+
+row2  = "H7,1,2,1,Well Details,1,Centre slot A1,Template installation report,A1,32.0,22, 15.0, 10.0".split(",")
 Well.set_rec_Well_Details(row2)
-#Rig.set_rec_Rig_Details(row3)
+
+row4  = "H7,1,5,1,Survey Details,1,1,1,MD-Drillpipe,1,Indicated Depth,1,8,AZ_GRID,3, Calculated from AZ_MAGN,1,2.151,-1.123,35342, 1972:06:28, 1,1.5, 9.807394,1,1".split(",")
 Survey.set_rec_Survey_Details(row4)
-Survey.set_rec_Survey_Tie_Point_Details(row41)
+
+row61 = "H7,1,5,2,Operator/Survey Contractor,1,Highland Oil,Tain Drilling,TD101,".split(",")
+Survey.set_rec_Operator_Survey_Contractor(row61)
+
+
 
 ### test MTREF
 row1  = "H7,3,0,0,Measurement Tool Definition,2,High-Speed Gyro,HSG,2,Gyro-Tools Inc,unknown serial number".split(",")
@@ -254,10 +241,8 @@ Survey.set_rec_Gravity_Model_Definition(row2)
 
 ### Skip raw_input extension fields
 
-### poslog with 3 extension fields
-#row1 = "H7,6,5,0,Position Log Type Definition,1,Composite,1,1,Minimum Curvature,6666,LMP,0,,0, 3, 1;;var_N;1, 2;;var_E;1, 3;;var_D;1".split(",")
-#Poslog = POSLOG(row1)
-Poslog = POSLOG()
+### P7 Table with 3 extension fields
+P7Table = P7TABLE()
 
 row1 = "P7,0,1,1,1,A001Mb_MWD,10,D,8,  Other, 173.09, 2.19,292.15,   3.74, -12.63, 173.00,6623785.69,425353.84, 117.00,59.74384278,1.671980833, 97; 98; 99".split(",")
 row2 = "P7,0,1,1,1,A001Mb_MWD,10,D,2,Planned, 200.00, 2.19,292.15,   4.27, -13.94, 209.88,6623786.22,425352.53, 153.88,59.74384722,1.671957222, 97; 98; 99".split(",")
@@ -265,12 +250,12 @@ row3 = "P7,0,1,1,1,A001Mb_MWD,10,D,2,Planned, 300.00, 5.00,300.00,   6.88, -18.9
 row4 = "P7,0,1,1,1,A001Mb_MWD,10,D,2,Planned, 780.77,45.21, 62.97, 100.45, 123.34,   734.32,6623882.37,425489.77, 678.32,59.74473500,1.674363889, 97; 98; 99".split(",")
 row5 = "P7,0,1,1,1,A001Mb_MWD,10,D,2,Planned,4294.98,45.21, 62.97,1234.00,2345.00, 3210.00,6625015.54,427710.69, 3154.00,59.75530000,1.713474167, 97; 98; 99".split(",")
 row6 = "P7,0,1,1,1,A001Mb_MWD,10,D,2,Planned,4380.15,45.21, 62.97,1261.47,2398.00, 3270.00,6625043.00,427764.51, 3214.00,59.75555583,1.714422222, 97; 98; 99".split(",")
-Poslog.set_rec_P7_Position_Log_Record(row1)
-Poslog.set_rec_P7_Position_Log_Record(row2)
-Poslog.set_rec_P7_Position_Log_Record(row3)
-Poslog.set_rec_P7_Position_Log_Record(row4)
-Poslog.set_rec_P7_Position_Log_Record(row5)
-Poslog.set_rec_P7_Position_Log_Record(row6)
+P7Table.set_rec_P7_Data_Record(row1)
+P7Table.set_rec_P7_Data_Record(row2)
+P7Table.set_rec_P7_Data_Record(row3)
+P7Table.set_rec_P7_Data_Record(row4)
+P7Table.set_rec_P7_Data_Record(row5)
+P7Table.set_rec_P7_Data_Record(row6)
 
 ### raw data
 row11 = "M7,0,1,1,2014:09:17:13:15:22.0,1,1740.0,36.0, 75.43,41.92,158.75,1705.16,1, 4.177509,3.972274,7.934024,10182.6299,36850.9976,52571.98776,9.807103,65003.81429,71.921632,304.220706,-133.557428,9.806986, 65094.495067,71.939312,-2.0,0.0,".split(",")
@@ -341,7 +326,7 @@ outfh.write("\n")
 
 ### Write Common Header Records
 Project.write_rec_IOGP_File_Identification_Record(outfh)
-Project.write_rec_Project_Name(outfh)
+Project.write_rec_Project_Information(outfh)
 Structure.write_rec_Structure_Definition(outfh)
 Well.write_rec_Well_Definition(outfh)
 Wellbore.write_rec_Wellbore_Definition(outfh)
@@ -415,14 +400,14 @@ outfh.write("\n")
 Survey.write_rec_Geomagnetic_Model_Definition(outfh)
 Survey.write_rec_Gravity_Model_Definition(outfh)
 
-### Data records definition (POSLOG)
+### Data records definition (P7TABLE)
 logging.warning("skipping over raw data extension fields")
 logging.warning("skipping over error model definitions")
 outfh.write("\n")
-Poslog.write_rec_Position_Log_Type_Definition(outfh)
+P7Table.write_rec_P7_Table_Definition(outfh)
 
 outfh.write("\n")
-Poslog.write_rec_P7_Position_Log_Record(outfh)
+P7Table.write_rec_P7_Data_Record(outfh)
 outfh.write("\n")
 
 ### Write raw data records.  A survey has either MWD or Gyro.  For testing it is doing both currently.  P72000 converter would not have it anyway.

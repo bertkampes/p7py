@@ -9,10 +9,10 @@
 ###   3) Dict of all Records length and format (type)
 ###   4) Helper functions for reading, writing, comparing (parsing is done in class)
 ###
-### v1: draft based on v1.0 of IOGP p717 wellbore data exchange format specification
+### v1: draft based on v0.99c of IOGP p717 wellbore data exchange format specification
 ### This code is sample code, provided AS-IS.  Do with it whatever you want, but make sure to check.
 ###
-### Bert Kampes, 2018-07-04
+### Bert Kampes, 2019-06-23
 #########################################################################################
 
 import logging  # Used in helper functions.  Logger needs to be initialized in caller
@@ -23,23 +23,38 @@ import logging  # Used in helper functions.  Logger needs to be initialized in c
 ### See format specification document tables and Appendix A
 ###########################################################
 
-### MTTYPEID: Measurement Tool Type
-dictMTTYPEID      = {1: 'Magnetic',    2: 'Gyro',     3: 'Inertial',   4: 'Inclination only',      5: 'Utility', }
-
-### UNITREF: could do full name and abbreviation
-#dictUNITREF       = {1:'metre',      2: 'radian',        3: 'degree',        4: 'unity',      5: 'foot', 6: 'US survey foot', 7: 'millimetre', }
-### Format-defined UNITREF table 7
+### table 7: Format-defined UNITREF (use abbreviations here but may want to include full names and definitions later for reporting and calculations)
 dictUNITREF       = {1: 'm',      2: 'rad',        3: 'deg',      4: '-',        5: 'ft',     6: 'ftUS', 7: 'mm',  8: 'in',     9: 'ftSe', 10: 'ftCla', 
                     11: 'lkCla', 12: 'sec',       13: 'gr',      14: 'ppm',     15: 's',     16: 's',   17: 's',  18: 'ms',    19: 'm/s',  20: 'm/s2',
                     21: 'rad/m', 22: 'deg/30m',   23: 'deg/100ft', 24: 'T',   25: 'nT', 26: 'rad/s', 27: 'deg/h', 
                     28: 'sqm',   29: 'sqft',      30: 'sqftUS',   31: 'mxft', 32: 'mxftUS',
-                    } # table 7
+                    }
 
+### table 8: CRSTYPEREF 
 dictCRSTYPEREF    = {1: 'Projected', 2: 'Geographic 2D', 3: 'Geographic 3D', 4: 'Geocentric', 5: 'Vertical', 6: 'Engineering', 7: 'Compound', }
-dictCSTYPEREF     = {1: 'Affine',    2: 'Cartesian',     3: 'Ellipsoidal',   4: 'Polar',      5: 'Vertical', }
-dictATTID         = {1: 'Original File Name',  2: 'Superseded File Name',   3: 'Legacy File Name', } # table 13 (dict can be extended by user)
 
-### WOBSID Name and Type
+### table 9: CSTYPEREF
+dictCSTYPEREF     = {1: 'Affine',    2: 'Cartesian',     3: 'Ellipsoidal',   4: 'Polar',      5: 'Vertical', }
+
+### table 10: ZDPTYPES
+dictZDPTYPES      = {'BR' : 'RIG BRACING', 
+					'CV' : 'CROWN VALVE',
+					'DF' : 'DERRICK FLOOR',
+					'GL' : 'GROUND LEVEL',
+					'KB' : 'KELLY BUSHING',
+					'LAT' : 'LOWEST ASTRONOMIC TIDE',
+					'MLLW' : 'MEAN LOWER LOW WATER',
+					'MT' : 'DRILLING FLOOR MAT',
+					'PT' : 'PIPE TOP',
+					'RF' : 'RIG FLOOR',
+					'RT' : 'ROTARY TABLE',
+					'SF' : 'SEA FLOOR',
+					'TBF' : '	TOP BOTTOM FLANGE',
+					'TC' : 'TOP CELLAR',
+					'UN' : 'unknown',
+					}
+
+### table 11: WOBSID Name and Type (MDINCAZ types)
 ### dictWOBSID[t][0]    is the Type Name (n=1:10)
 ### dictWOBSID[t][1][f] is the Type Flag (f=0:4)
 dictWOBSID        = {1: ['MD-Drillpipe', {0: 'Planned', 1: 'Indicated Depth', 2: 'Calibrated Depth', 3: 'Corrected Depth', 4: 'True Along-hole Depth', }],
@@ -52,28 +67,33 @@ dictWOBSID        = {1: ['MD-Drillpipe', {0: 'Planned', 1: 'Indicated Depth', 2:
                      8: ['AZIM_GRID',    {0: 'Planned',                       2: 'Back-calculated', 3: 'Calculated from AZ_MAGN', 4: 'Calculated from AZ_TRUE', }],
                      9: ['AZIM_UNKN',    {5: 'Unknown AZ reference', }],
                     10: ['AZIM_NONE',    {0: 'Not surveyed', }],
-                    } # table 12
+                    }
 
+### table 12: MTTYPEID: Measurement Tool Type 
+dictMTTYPEID      = {1: 'Magnetic',    2: 'Gyro',     3: 'Inertial',   4: 'Inclination only',      5: 'Utility', }
 
-### Measurement Type Attributes
-dictMTATTID       = {
-                 1: 'Data Retrieval',               
-                 2: 'Measurement Trigger',            
-                 3: 'Collar RPM Low Trigger Threshold',
-                 4: 'Flow Trigger Threshold',       
-                 5: 'Trigger Measurement Time Delay', 
-                 6: 'Measurement Time Duration',
-                 7: 'Tool Distance Reference Name', 
-                 8: 'Time Reference',                 
-                 9: 'Battery Powered',
-                10: 'Offset from bit',
-                11: 'Non-magnetic spacing above the magnetic sensor', 
-                12: 'Non-magnetic spacing below the magnetic sensor',
-                13: 'Magnetic field intensity at top of steel below the non-magnetic spacing',
-                14: 'Magnetic field intensity at bottom of steel above the non-magnetic spacing',
-                } # table 15
+### Attributes table 13 (dict can be extended by user)
+#dictATTID         = {1: 'Original File Name',  2: 'Superseded File Name',   3: 'Legacy File Name', }
 
-### WELL Objects
+### Measurement Type Attributes  # table 15
+#dictMTATTID       = {
+#                 1: 'Data Retrieval',               
+#                 2: 'Measurement Trigger',            
+#                 3: 'Collar RPM Low Trigger Threshold',
+#                 4: 'Flow Trigger Threshold',       
+#                 5: 'Trigger Measurement Time Delay', 
+#                 6: 'Measurement Time Duration',
+#                 7: 'Tool Distance Reference Name', 
+#                 8: 'Time Reference',                 
+#                 9: 'Battery Powered',
+#                10: 'Offset from bit',
+#                11: 'Non-magnetic spacing above the magnetic sensor', 
+#                12: 'Non-magnetic spacing below the magnetic sensor',
+#                13: 'Magnetic field intensity at top of steel below the non-magnetic spacing',
+#                14: 'Magnetic field intensity at bottom of steel above the non-magnetic spacing',
+#                }
+
+### table 13: WELL Postion Objects
 ### shortname = dictWOBJTYPEID[2][0] # returns "WRP"
 ### fullname  = dictWOBJTYPEID[2][1] # returns "Well Reference Point"
 dictWOBJTYPEID    = {
@@ -89,27 +109,35 @@ dictWOBJTYPEID    = {
                  9: ['CP',  'Casing Point'],
                 10: ['TP',  'Tie-in Point'],
                 11: ['KOP', 'Kick Off Point'],
-                12: ['FTIP','Formation Top Intersection Point'],
-                13: ['RPP', 'Reservoir Penetration Point'],
-                14: ['PP',  'Perforation Point'],
+                12: ['FT',  'Formation Top'],
+                13: ['PP',  'Reservoir Penetration Point'],
+                14: ['PERF','Perforation Point'],
                 15: ['BHL', 'Bottom Hole Location'],
-                } # table 16
+                }
+
+### table 14: Well Position Object Attributes. Can be user extended starting from 100 onward.
 dictWOBJATTID     = {
-                 1: 'Surface Positioning Method',    
-                 2: 'Date Positioned', 
-                } # table 17
-dictWOBJSTATUS    = {
+                 1: 'Land Positioning Method',
+                 2: 'Marine Positioning Method',
+                 3: 'Date Positioned',
+                 4: 'Coordinate QC Status', 
+                }
+
+### table 18: Wellbore Observables (MDINCAZ) status.  Can be user extended starting from 100 onward.				
+dictWOBSSTATUS    = {
+                 0: ['Surveyed'],
                  1: ['Surveyed'],
                  2: ['Planned'],
                  3: ['INC Interpolated'],
                  4: ['AZ Interpolated'],
                  5: ['INC and AZ Interpolated'],
-                 6: ['Extrapolated point (Projected out)'],
-                 7: ['Extrapolated point (Directional trend)'],
-                 8: ['Other'],
+                 6: ['Projected'],
+                 7: ['Trended'],
+                 8: ['INC and AZ back-calculated'],
+                 9: ['Other'],
                 } # table 21
 
-### O7 and P7 (POSLOG) standard Extension Field Identifiers; essentially column headers
+### table 15: O7 and P7 standard Extension Field Identifiers; essentially column headers.
 ### dictP7ExtensionFieldID[i][0] is the data field column header
 ### dictP7ExtensionFieldID[i][1] is the additional parameter
 ### dictP7ExtensionFieldID[i][2] is the data field column unit (for now as string, could change this to use a key to dictUNIT)
@@ -138,42 +166,12 @@ dictP7ExtensionFieldID   = {
                 22: ['course length', 0,   'unit_to_be_set'],
                 23: ['tortuisity',    0,   'unit_to_be_set'],
                 24: ['closure dist',  0,   'unit_to_be_set'],
-                25: ['vert Sect',     0,   'unit_to_be_set'], # additional parameter has the azimuth 
+                25: ['vert section',  0,   'unit_to_be_set'], # additional parameter has the azimuth 
                 26: ['comment',       0,   ''],
-                } # table 18
+                27: ['UTC',           0,   'YYYY:MM:DD:HH:MM:SS.ss'],
+                }
 
                 
-
-############## THIS SHOUL BE DELETED PROBABLY, IS HARD-CODED MANDATED IN SPEC ###############                
-### Make this perhaps for M7 and G7 and even user extendable...                
-### Hardcoded format-mandated units/fields 
-### dictRAWTYPEREF[i][0] is the data field column header
-### dictRAWTYPEREF[i][1] is the data field column unit (for now as string, could change this to use a key to dictUNIT)
-# dictRAWTYPEREF    = {
-                 # 1: ['Gx',          'm/s^2'],         
-                 # 2: ['Gy',          'm/s^2'],      
-                 # 3: ['Gz',          'm/s^2'],
-                 # 4: ['Bx',          'nT'],            
-                 # 5: ['By',          'nT'],         
-                 # 6: ['Bz',          'nT'],
-                 # 7: ['G-Total',     'm/s^2'],    
-                 # 8: ['B-Total',     'nT'],    
-                 # 9: ['MagDip',      'deg'],
-                # 10: ['RefG',        'm/s^2'],      
-                # 11: ['RefB',        'nT'],      
-                # 12: ['RefDip',      'deg'],
-                # 13: ['Declination', 'deg'], 
-                # 14: ['Convergence', 'deg'],
-                # 15: ['Wx',          'deg/h'],        
-                # 16: ['Wy',          'deg/h'],     
-                # 17: ['Wz',          'deg/h'],
-                # 18: ['Latitude',    'deg'],    
-                # 19: ['Total ER',    'deg/h'], 
-                # 20: ['Gyro-TF',     'deg'],    
-                # 21: ['GravTF',      'deg'],
-                # 22: ['RefLat',      'deg'],
-                # } # table 17
-
 
 
 
@@ -183,34 +181,23 @@ dictP7ExtensionFieldID   = {
 
 ### RecordID                                 #  Identifier                                           # Asterisks indicates object constructor row
 ### --------------------------------------------------------------------------------------------------------------------------
-rec_IOGP_File_Identification_Record          = ('IOGP',)                                             #  mandatory (NB: last comma makes it a tuple)
-rec_Project_Name                             = ('HC','0','1','1', 'Project Name')                    #  mandatory
-rec_Structure_Definition                     = ('HC','0','2','1', 'Structure Definition')            # *STRUCTUREREF
-rec_Well_Definition                          = ('HC','0','3','1', 'Well Definition')                 # *WELLREF
-rec_Wellbore_Definition                      = ('HC','0','4','1', 'Wellbore Definition')             # *WELLBOREREF
-rec_Rig_Definition                           = ('HC','0','5','1', 'ZDP Rig/Workover Definition')     # *ZDPREF
-rec_Survey_Definition                        = ('HC','0','6','1', 'Survey Definition')               # *SURVEYREF
+rec_IOGP_File_Identification_Record          = ('IOGP',)                                             #  mandatory first line (NB: comma at end makes it a tuple)
 
-rec_Operator_Survey_Contractor_Acqn          = ('HC','0','7','1', 'Operator/Survey Contractor (Acqn)')  #
-rec_Operator_Survey_Contractor_Proc          = ('HC','0','7','2', 'Operator/Survey Contractor (Proc)')  #
-rec_Positioning_Contractor                   = ('HC','0','6','0', 'Land/Marine Positioning Contractor') #  optional
-
-### Units of Measure (do not expect them in the file unless user-defined or full explicit definition copy from mandatory order)
-#rec_Reference_Systems_Summary                = ('HC','1','0','0', 'Reference Systems Summary')
+### Units of Measure (do not expect these to be in the file. Unless user-defined or full explicit definition copy from mandatory order.
 rec_Unit_Of_Measure_Definition               = ('HC','1','1','0', 'Unit of Measure')                 # *UNITREF
 rec_Example_Unit_Conversion                  = ('HC','1','1','1', 'Example Unit Conversion')
 
 ### Coordinate Reference System
 rec_CRS_Implicit_Identification              = ('HC','1','3','0', 'CRS Number/EPSG Code/Name/Source')# *CRSREF (implicit def)
 rec_CRS_Details                              = ('HC','1','4','0', 'CRS Number/EPSG Code/Type/Name')  #  explicit definition
-rec_Compound_CRS_Horizontal_Identification   = ('HC','1','4','1', 'Compound Horizontal CRS')         #
-rec_Compound_CRS_Vertical_Identification     = ('HC','1','4','2', 'Compound Vertical CRS')           #
+#rec_Compound_CRS_Horizontal_Identification   = ('HC','1','4','1', 'Compound Horizontal CRS')         #
+#rec_Compound_CRS_Vertical_Identification     = ('HC','1','4','2', 'Compound Vertical CRS')           #
 rec_Base_Geographic_CRS_Details              = ('HC','1','4','3', 'Base Geographic CRS')             #
 rec_Geodetic_Datum_Details                   = ('HC','1','4','4', 'Geodetic Datum')                  #
 rec_Prime_Meridian_Details                   = ('HC','1','4','5', 'Prime Meridian')                  #
 rec_Ellipsoid_Details                        = ('HC','1','4','6', 'Ellipsoid')                       #
 rec_Vertical_Datum_Details                   = ('HC','1','4','7', 'Vertical Datum')                  #
-rec_Engineering_Datum_Details                = ('HC','1','4','8', 'Engineering Datum')               #
+#rec_Engineering_Datum_Details                = ('HC','1','4','8', 'Engineering Datum')               #
 
 rec_Map_Projection_Details                   = ('HC','1','5','0', 'Map Projection')                  #
 rec_Projection_Method_Details                = ('HC','1','5','1', 'Projection Method')               #  
@@ -218,14 +205,15 @@ rec_Projection_Parameter_Details             = ('HC','1','5','2', '{ProjectionPa
 
 rec_Coordinate_System_Details                = ('HC','1','6','0', 'Coordinate System')               #
 rec_Coordinate_Axis_Details                  = ('HC','1','6','1', 'Coordinate System Axis {AxisNumber}') # rec(4).format(AxisNumber=int(row(6))) using field 7
+rec_Coordinate_Axis_Conversion_Applied       = ('HC','1','6','2', 'Coordinate Axis Conversion Applied')  # new CH record for P7/17 format
 
 ### Coordinate Transformation
 rec_CT_Implicit_Identification               = ('HC','1','7','0', 'Transformation Number/EPSG Code/Name/Source')  # *COTRANSREF
 rec_CT_Explicit_Definition                   = ('HC','1','8','0', 'Transformation Number/EPSG Code/Name')  #
 rec_CT_Details                               = ('HC','1','8','1', 'Source CRS/Target CRS/Version')   #
 rec_CT_Method_Details                        = ('HC','1','8','2', 'Transformation Method')           #
-rec_Transformation_Parameter_File_Details    = ('HC','1','8','3', '{CTParameterName}')               #  <-- Should use EPSG parameter name
-rec_Transformation_Parameter_Details         = ('HC','1','8','4', '{CTParameterName}')               #  <-- Should use EPSG parameter name
+rec_Transformation_Parameter_File_Details    = ('HC','1','8','3', '{CTParameterName}')               #  <-- replace with EPSG name
+rec_Transformation_Parameter_Details         = ('HC','1','8','4', '{CTParameterName}')               #  <-- replace with EPSG name
 
 rec_Example_Point_Conversion                 = ('HC','1','9','0', 'Example Point Conversion')        #
 
@@ -240,43 +228,42 @@ rec_Additional_Information_C7                = ('C7',)                          
 #####################################################################
 ### P7 Specific Header
 #####################################################################
-rec_File_Contents_Description                = ('H7','0','0','0', 'File_Contents_Description')       #  mandatory (non-critical metadata)
-rec_File_Processing_Details                  = ('H7','0','1','0', 'File Processing_Details')         #  mandatory (non-critical metadata)
-rec_File_Contents_Attribute                  = ('H7','0','2','0', '{AttRefName}')                    #  rec(4).format(AttRefName='blabla'); See table 12; can be user extended
+rec_Project_Information                      = ('H7','1','0','0', 'Project Information')             #  mandatory
+rec_Structure_Definition                     = ('H7','1','1','0', 'Structure Definition')            # *STRUCTUREREF
+rec_Structure_Details                        = ('H7','1','1','1', 'Structure Details')               #  mandatory
+rec_Well_Definition                          = ('H7','1','2','0', 'Well Definition')                 # *WELLREF
+rec_Well_Details                             = ('H7','1','2','1', 'Well Details')                    #  mandatory
+rec_Positioning_Contractor                   = ('H7','1','2','2', 'Land/Marine Positioning Contractor') #  optional
+rec_Wellbore_Definition                      = ('H7','1','3','0', 'Wellbore Definition')             # *WELLBOREREF
+rec_Rig_Definition                           = ('H7','1','4','0', 'ZDP Rig/Workover Definition')     # *ZDPREF
+rec_Survey_Definition                        = ('H7','1','5','0', 'Survey Definition')               # *SURVEYREF
+rec_Survey_Details                           = ('H7','1','5','1', 'Survey Details')                  #  mandatory
+rec_Operator_Survey_Contractor               = ('H7','1','5','2', 'Operator/Survey Contractor')      #  optional
 
-rec_Structure_Details                        = ('H7','1','0','0', 'Structure Details')               #  mandatory
-rec_Well_Details                             = ('H7','1','1','0', 'Well Details')                    #  mandatory
-rec_Survey_Details                           = ('H7','1','4','0', 'Survey Details')                  #  mandatory
-rec_Survey_Tie_Point_Details                 = ('H7','1','4','1', 'Survey Tie Point Details')        #  mandatory if tie point used (or ST=Y?)
+rec_Measurement_Tool_Definition              = ('H7','2','0','0', 'Measurement Tool Definition')     #
+rec_Geomagnetic_Model_Definition             = ('H7','3','0','0', 'Geomagnetic Model Definition')    #  mandatory for MWD
+rec_Gravity_Model_Definition                 = ('H7','3','1','0', 'Gravity Model Definition')        #  mandatory if raw data is included in the file
+rec_Position_Object_Definition               = ('H7','4','0','0', 'Position Object Definition')      # *WOBJREF; WOBJTYPEREF: full name of point, e.g. 'Well Reference Point';
+rec_Position_Object_Attribute                = ('H7','4','1','0', '{WobjAttRefName}')                #  See table WOBJATTREF lookup;
 
-rec_Measurement_Tool_Definition             = ('H7','3','0','0', 'Measurement Tool Information')    #
-rec_Measurement_Tool_Attributes              = ('H7','3','0','1', '{MtAttRefName}')                  #  rec(4).format(MtAttRefName='blabla'); See lookup MTATTREF; can be user extended
-
-rec_Position_Object_Definition               = ('H7','4','0','0', 'Position Object Definition')      # *WOBJREF; See table 15; WOBJTYPEREF: full name of point, e.g. 'Well Reference Point';
-rec_Well_Object_Attributes                   = ('H7','4','2','0', '{WobjAttRefName}')                #  See table WOBJATTREF lookup;
-
-rec_Geomagnetic_Model_Definition             = ('H7','5','0','0', 'Geomagnetic Model Definition')    #  mandatory for MWD
-rec_Gravity_Model_Definition                 = ('H7','5','1','0', 'Gravity Model Definition')  #  mandatory if raw data is included in the file
-
-### Raw Measurements (if extended fields)
-rec_M7_Record_Extension_Definition           = ('H7','6','0','0', 'M7 Record Extension Field Definition') #  mandatory if M7 records contain additional data
-rec_G7_Record_Extension_Definition           = ('H7','6','0','0', 'G7 Record Extension Field Definition') #  mandatory if G7 records contain additional data
-
-### Poslog data
-rec_Position_Log_Type_Definition             = ('H7','6','5','0', 'Position Log Type Definition')    # *POSLOGTYPEREF
-
+### P7 Table
+rec_P7_Table_Definition                      = ('H7','5','0','0', 'P7 Table Definition')                # *P7TABLEREF
 
 ### P7 Specific Header: Error Model
-rec_Survey_Tool_Error_Model_Definition       = ('H7','9','0','0', 'Survey Tool Error Model Definition') # *STEMREF
-rec_Survey_Tool_Error_Model_Metadata         = ('H7','9','1','0', 'Survey Tool Error Model Metadata')   #  Aug. 10, 2018: added missing description
-rec_Survey_Tool_Error_Model_Terms            = ('H7','9','2','0', 'Survey Tool Error Model Terms')      #  Aug. 10, 2018: added missing description
+rec_Survey_Tool_Error_Model_Definition       = ('H7','6','0','0', 'Survey Tool Error Model Definition') # *STEMREF
+rec_Survey_Tool_Error_Model_Metadata         = ('H7','6','1','0', 'Survey Tool Error Model Metadata')   #  
+rec_Survey_Tool_Error_Model_Terms            = ('H7','6','2','0', 'Survey Tool Error Model Terms')      #  
+
+### Raw Sensor Data (extended fields)
+rec_M7_Record_Extension_Definition           = ('H7','7','0','0', 'M7 Record Extension Field Definition') #  mandatory if M7 records contain additional data
+rec_G7_Record_Extension_Definition           = ('H7','7','1','0', 'G7 Record Extension Field Definition') #  mandatory if G7 records contain additional data
 
 
 #####################################################################
 ### P7 Data Records (note: comma after string to ensure it is defined as a tuple)
 #####################################################################
 rec_O7_Position_Record                       = ('O7',)                                            #  details to be appended for WOBJ
-rec_P7_Position_Log_Record                   = ('P7',)                                            #  refers to a SURVEYREF and POSLOGTYPEREF
+rec_P7_Data_Record                           = ('P7',)                                            #  refers to a SURVEYREF and P7TABLEREF
 rec_M7_MWD_Raw_Sensor_Data_Record            = ('M7',)                                            #  refers to a SURVEYREF
 rec_G7_Gyro_Raw_Sensor_Data_Record           = ('G7',)                                            #  refers to a SURVEYREF
 
@@ -328,35 +315,18 @@ rec_G7_Gyro_Raw_Sensor_Data_Record           = ('G7',)                          
 #------------------------------------------------------------------------------------------------------------------------------
 dict_record_spec = {
     rec_IOGP_File_Identification_Record:             [0, (1,    1,'{},{},{},{:f},{:d},{},{},{},{}', () )],
-    rec_Project_Name:                                [0, (1,    1,'{},{},{},{},{:<50},{},{},{},{},{},{},{:d},{},{}', () )],
-    rec_Structure_Definition:                        [0, (1,10000,'{},{},{},{},{:<50},{:d},{},{},{:d},{},{}', 
-        (rec_Project_Name, rec_Structure_Details, ) )],
-    rec_Well_Definition:                             [0, (1,10000,'{},{},{},{},{:<50},{:d},{:d},{},{:d},{},{},{},{},{},{},{},{},{}', 
-        (rec_Structure_Definition, rec_Well_Details, ) )],
-    rec_Wellbore_Definition:                         [0, (1,50000,'{},{},{},{},{:<50},{:d},{:d},{},{},{},{},{},{},{},{},{},{},{BLANK:.1f},{BLANK:d},{}', 
-        (rec_Well_Definition, ) )],
-    rec_Rig_Definition:                              [0, (1,10000,'{},{},{},{},{:<50},{:d},{},{},{:.1f},{BLANK:.1f},{BLANK:.1f},{}', 
-        (rec_Structure_Definition, ) )],
-    # actually may be list of MTREFs for survey with Gyro&MWD
-    rec_Survey_Definition:                           [0, (1,50000,'{},{},{},{},{:<50},{:d},{:d},{:d},{},{},{BLANK:d},{},{},{},{:.2f},{:.2f},{},{},{BLANK:.3f},{},{}', 
-        (rec_Rig_Definition, rec_Survey_Details, ) )],
-   
-    rec_Operator_Survey_Contractor_Acqn:             [0, (0,   50,'{},{},{},{},{:<50},{:d},{},{},{},{}', () )],
-    rec_Operator_Survey_Contractor_Proc:             [0, (0,   50,'{},{},{},{},{:<50},{:d},{},{},{},{}', () )],
-    rec_Positioning_Contractor:                      [0, (0,   50,'{},{},{},{},{:<50},{:d},{},{}', () )],
 
-    ### Units of Measure (should not be there as implicit)
+    ### Units of Measure (should not be there as it is implicit in the p7/17)
     rec_Unit_Of_Measure_Definition:                  [0, (0,   50,'{},{},{},{},{:<50},{:d},{},{},{:d},{BLANK:d},{BLANK:f},{BLANK:f},{BLANK:f},{BLANK:f},{},{BLANK:d},{},{},{}', 
         (rec_Example_Unit_Conversion, ) )],
     rec_Example_Unit_Conversion:                     [0, (0,   50,'{},{},{},{},{:<50},{:d},{:d},{}', () )],
 
-    ### Coordinate Reference System: assume at least 3: projCRS, geogCRS, vertCRS, compoundCRS (and probably WGS 84)
+    ### Coordinate Reference System: assume at least projCRS, geogCRS, vertCRS, and probably WGS 84
     ### Tests of dependencies should be done in more detail when objects are constructed.
-    rec_CRS_Implicit_Identification:                          [0, (4,   9,'{},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}', 
-        (rec_CRS_Details, ) )],
+    rec_CRS_Implicit_Identification:                 [0, (4,   9,'{},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}',  () )],
     rec_CRS_Details:                                 [0, (0,   50,'{},{},{},{},{:<50},{:d},{BLANK:d},{:d},{},{}', () )],
-    rec_Compound_CRS_Horizontal_Identification:      [0, (0,   10,'{},{},{},{},{:<50},{:d},{:d},{BLANK:d},{}', () )],
-    rec_Compound_CRS_Vertical_Identification:        [0, (0,   10,'{},{},{},{},{:<50},{:d},{:d},{BLANK:d},{}', () )],
+    #rec_Compound_CRS_Horizontal_Identification:      [0, (0,   10,'{},{},{},{},{:<50},{:d},{:d},{BLANK:d},{}', () )],
+    #rec_Compound_CRS_Vertical_Identification:        [0, (0,   10,'{},{},{},{},{:<50},{:d},{:d},{BLANK:d},{}', () )],
     rec_Base_Geographic_CRS_Details:                 [0, (0,   10,'{},{},{},{},{:<50},{:d},{:d},{:d},{}',               # required for projected; and projected is required
         (rec_Geodetic_Datum_Details, ) )], 
     rec_Geodetic_Datum_Details:                      [0, (0,   10,'{},{},{},{},{:<50},{:d},{:d},{},{}', 
@@ -364,7 +334,7 @@ dict_record_spec = {
     rec_Prime_Meridian_Details:                      [0, (0,   10,'{},{},{},{},{:<50},{:d},{:d},{},{},{:d},{}', () )],  # very unlikely to be more than 1, but repeated for each CRS...
     rec_Ellipsoid_Details:                           [0, (0,   10,'{},{},{},{},{:<50},{:d},{:d},{},{:f},{:d},{},{:f}', () )],
     rec_Vertical_Datum_Details:                      [0, (0,   10,'{},{},{},{},{:<50},{:d},{:d},{}', () )],
-    rec_Engineering_Datum_Details:                   [0, (0,   10,'{},{},{},{},{:<50},{:d},{BLANK:d},{}', () )],
+    #rec_Engineering_Datum_Details:                   [0, (0,   10,'{},{},{},{},{:<50},{:d},{BLANK:d},{}', () )],
 
     rec_Map_Projection_Details:                      [0, (0,   10,'{},{},{},{},{:<50},{:d},{:d},{}', () )],
     rec_Projection_Method_Details:                   [0, (0,   10,'{},{},{},{},{:<50},{:d},{:d},{},{:d}', () )],
@@ -373,7 +343,8 @@ dict_record_spec = {
     rec_Coordinate_System_Details:                   [0, (0,   50,'{},{},{},{},{:<50},{:d},{BLANK:d},{},{:d},{},{:d}',       #CRSREF, EPSG, CRSTYPEREF, dim
         (rec_Coordinate_Axis_Details, ) )],
     rec_Coordinate_Axis_Details:                     [0, (0,   50,'{},{},{},{},{:<50},{:d},{:d},{BLANK:d},{},{},{},{:d},{}', () )],
-
+    rec_Coordinate_Axis_Conversion_Applied:          [0, (0,   50,'{},{},{},{},{:<50},{:d},{:d},{},{:d},{}', () )],	
+	
     ### Coordinate Transformation (not mandatory, e.g., if data are in WGS 84)
     rec_CT_Implicit_Identification:                  [0, (0,   10,'{},{},{},{},{:<50},{:d},{BLANK:d},{},{},{},{},{}', () )],
     rec_CT_Explicit_Definition:                      [0, (0,   10,'{},{},{},{},{:<50},{:d},{BLANK:d},{},{}', 
@@ -394,61 +365,70 @@ dict_record_spec = {
     rec_Additional_Information_C7:                   [0, (0,90000,'{},{},{},{},{}', () )], # 5 fields, ignore comma's in comments 
 
     ### P7 Specific Header
-    rec_File_Contents_Description:                   [0, (1,    1,'{},{},{},{},{:<50},{},{}', () )],   # mandatory
-    rec_File_Processing_Details:                     [0, (1,  100,'{},{},{},{},{:<50},{}', () )],      # mandatory
-    rec_File_Contents_Attribute:                     [0, (0,   10,'{},{},{},{},{:<50},{:d},{},{:d},{}', () )],
-
-    ### Entity detail records
-    rec_Structure_Details:                           [0, (1,10000,'{},{},{},{},{:<50},{:d},{},{BLANK:.1f},{BLANK:.1f},{},{BLANK:d},{},{BLANK:.3f}', () )],
+    rec_Project_Information:                         [0, (1,    1,'{},{},{},{},{:<50},{},{},{},{},{}', () )],
+    rec_Structure_Definition:                        [0, (1,10000,'{},{},{},{},{:<50},{:d},{},{},{:d},{},{}', 
+        (rec_Project_Information, rec_Structure_Details, ) )],
+    rec_Structure_Details:                           [0, (1,10000,'{},{},{},{},{:<50},{:d},{},{BLANK:.2f},{BLANK:.2f},{},{BLANK:d},{},{BLANK:.3f}', () )],
+    rec_Well_Definition:                             [0, (1,10000,'{},{},{},{},{:<50},{:d},{:d},{},{:d},{},{},{},{},{},{},{},{},{}', 
+        (rec_Structure_Definition, rec_Well_Details, ) )],
     rec_Well_Details:                                [0, (1,10000,'{},{},{},{},{:<50},{:d},{},{},{},{BLANK:f},{BLANK:d}, {BLANK:.2f},{BLANK:.2f}', 
         (rec_Position_Object_Definition, rec_O7_Position_Record, ) )], #WRP dependency
+    rec_Positioning_Contractor:                      [0, (0,   50,'{},{},{},{},{:<50},{:d},{},{}', () )],
+    rec_Wellbore_Definition:                         [0, (1,50000,'{},{},{},{},{:<50},{:d},{:d},{},{},{},{},{},{},{},{},{}', 
+        (rec_Well_Definition, ) )],
+    rec_Rig_Definition:                              [0, (1,10000,'{},{},{},{},{:<50},{:d},{},{},{:.1f},{BLANK:.1f},{BLANK:.1f},{},{BLANK:d},{BLANK:d}', 
+        (rec_Structure_Definition, ) )],
+    # field 11 may be a list of integers (e.g., for survey with Gyro&MWD); here error check done only for single 
+    rec_Survey_Definition:                           [0, (1,50000,'{},{},{},{},{:<50},{:d},{:d},{:d},{},{},{BLANK:d},{},{},{},{:.2f},{:.2f},{},{},{}, ' +
+																	'{},{BLANK:d},{BLANK:.2f},{BLANK:d}', 
+        (rec_Rig_Definition, rec_Survey_Details, ) )],
     rec_Survey_Details:                              [0, (1,50000,'{},{},{},{},{:<50},{:d}, {:d},{:d},{},{:d},{}, {:d}, {:d},{},{:d},{}, ' +
-                                                                    '{:d},{BLANK:.3f},{BLANK:.2f},{BLANK:.1f}, {}, ' +
-                                                                    '{:d},{BLANK:.3f},{BLANK:.5f}, {BLANK:d},{BLANK:d}', () )],
-    rec_Survey_Tie_Point_Details:                    [0, (0,   10,'{},{},{},{},{:<50},{:d},{:.2f},{:.2f},{:.2f},{:.2f}', 
-        (rec_Survey_Details, ) )],
+                                                                    '{:d},{BLANK:.3f}, ' +
+                                                                    '{:d},{BLANK:.3f},{}, {BLANK:d},{BLANK:d}', () )],
+    rec_Operator_Survey_Contractor:                  [0, (0,   50,'{},{},{},{},{:<50},{:d},{},{},{}', () )],
+   
     
     ### Measurement Tool
-    rec_Measurement_Tool_Definition:                 [0, (0,10000,'{},{},{},{},{:<50},{:d},{},{},{:d},{},{}', () )],
-    rec_Measurement_Tool_Attributes:                 [0, (0,50000,'{},{},{},{},{:<50},{:d},{:d},{},{:d},{}', () )],
-
-    ### Position Object
-    rec_Position_Object_Definition:                  [0, (1,10000,'{},{},{},{},{:<50},{:d},{},{:d},{},{},{BLANK:d},{BLANK:.2f}', () )],
-    rec_Well_Object_Attributes:                      [0, (0,50000,'{},{},{},{},{:<50},{:d},{:d},{},{BLANK:d},{}', () )],
+    rec_Measurement_Tool_Definition:                 [0, (0,10000,'{},{},{},{},{:<50},{:d},{},{:d},{},{},{},{BLANK:.2f}', () )],
 
     ### Reference models
     rec_Geomagnetic_Model_Definition:                [0, (0,   10,'{},{},{},{},{:<50},{:d},{},{},{},{}', () )],
     rec_Gravity_Model_Definition:                    [0, (0,10000,'{},{},{},{},{:<50},{:d},{}', () )],
 
-    ### Raw Measurements (mandatory if field extension used)
-    rec_M7_Record_Extension_Definition:            [0, (0,   50,'{},{},{},{},{:<50}{:d},{:d},{}', () )],
-    rec_G7_Record_Extension_Definition:            [0, (0,   50,'{},{},{},{},{:<50}{:d},{:d},{}', () )],
-        
-    ### Position Log
-    rec_Position_Log_Type_Definition:                [0, (1,   50,'{},{},{},{},{:<50},{:d},{},{:d},{:d},{},{:d},{},{:d},{BLANK:.5f},{:d},{:d},{}', () )],
+    ### Position Object
+    rec_Position_Object_Definition:                  [0, (1,10000,'{},{},{},{},{:<50},{:d},{},{:d},{},{},{BLANK:d},{BLANK:.2f}, ' +
+																	'{BLANK:.2f},{BLANK:.2f},{BLANK:.2f},{BLANK:.2f},{BLANK:.2f}', () )], #added 6/23/2019 TBD
+    rec_Position_Object_Attribute:                   [0, (0,50000,'{},{},{},{},{:<50},{:d},{:d},{},{BLANK:d},{}', () )],
+
+    ### P7 Table.  Note record may contain additional fields at end if there are extension fields defined.
+    rec_P7_Table_Definition:                         [0, (1,   50,'{},{},{},{},{:<50},{:d},{},{:d},{},{:d},{},{:d},{BLANK:.5f},{:d},{:d},{}', () )],
 
     ### Error Model (if OWSG model then implicit definition by next, otherwise all explicit)
     rec_Survey_Tool_Error_Model_Definition:          [0, (0,   50,'{},{},{},{},{:<50},{:d},{},{},{}', () )],
     rec_Survey_Tool_Error_Model_Metadata:            [0, (0,   50,'{},{},{},{},{:d},{:d},{},{}',
         (rec_Survey_Tool_Error_Model_Definition, rec_Survey_Tool_Error_Model_Terms, ) )],
-    rec_Survey_Tool_Error_Model_Terms:               [0, (0,   50,'{},{},{},{},{:d},{:d},{},{},{},{},{},{:f},{},{},{},{},{},{},{},{},{},{},{},{}',
+    rec_Survey_Tool_Error_Model_Terms:               [0, (0,   50,'{},{},{},{},{:<50},{:d},{:d},{},{},{},{},{},{:f},{},{},{},{},{},{},{},{},{},{},{},{}',
         (rec_Survey_Tool_Error_Model_Definition, rec_Survey_Tool_Error_Model_Metadata, ) )],
 
+    ### Raw Measurements (mandatory if field extension used)
+    rec_M7_Record_Extension_Definition:              [0, (0,   50,'{},{},{},{},{:<50}{:d},{:d},{}', () )],
+    rec_G7_Record_Extension_Definition:              [0, (0,   50,'{},{},{},{},{:<50}{:d},{:d},{}', () )],
+        
     ### Data Records (note: the last field may be empty, filled, or separated with semi-columns for more than 1 extension field)
     ### O7 does not have extension fields
     rec_O7_Position_Record:                          [0, (1,  50000,'{},{:d},{:d},{},{},{BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.7f},{BLANK:.7f}, ' +
                                                                     '{BLANK:.7f},{BLANK:.7f}, {BLANK:.2f},{BLANK:.2f}', () )],
-    rec_P7_Position_Log_Record:                      [0, (2,5000000,'{},{:d},{:d},{:d},{:d},{},{:d},{},{:d},{}, {:.2f},{:.2f},{:.2f}, ' + 
+    rec_P7_Data_Record:                              [0, (2,5000000,'{},{:d},{:d},{:d},{:d},{},{:d},{},{:d},{}, {:.2f},{:.2f},{:.2f}, ' + 
                                                                     '{BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, {BLANK:.2f},{BLANK:.2f},{BLANK:.2f}, ' +
                                                                     '{BLANK:.7f},{BLANK:.7f},{}', () )],
-    rec_M7_MWD_Raw_Sensor_Data_Record:               [0, (0,5000000,'{},{:d},{:d},{:d},{},{:d}, {:f},{:f},{:f}, {:f},{:f},{:f}, {:d},' +
+    rec_M7_MWD_Raw_Sensor_Data_Record:               [0, (0,5000000,'{},{:d},{:d},{:d},{},{:d},{:d}, {:f},{:f},{:f}, {:f},{:f},{:f}, ' +
                                                                     '{:f},{:f},{:f}, {:f},{:f},{:f},' + 
-                                                                    '{:f},{:f}, {:f},{:f},{:f}, {:f},{:f},{:f}, {:f},{:f},{}',
-                                                                    (rec_P7_Position_Log_Record, ) )],
+                                                                    '{:f},{:f}, {:f},{:f},{:f}, {:f},{:f},{:f}, {:f},{:f}, {}',
+                                                                    (rec_P7_Data_Record, ) )],
     rec_G7_Gyro_Raw_Sensor_Data_Record:              [0, (0,5000000,'{},{:d},{:d},{:d},{},{:d}, {:f},{:f},{:f}, {:f},{:f},{:f}, {:d},' +
                                                                     '{:f},{:f},{:f}, {:f},{:f},{:f},' +
                                                                     '{:f},{:f},{:f}, {:f},{:f}, {:f},{:f},{:f}, {:f}, {}', 
-                                                                    (rec_P7_Position_Log_Record, ) )],
+                                                                    (rec_P7_Data_Record, ) )],
     }
 
 
@@ -637,15 +617,15 @@ def check_record_descriptor(row, p7recordID):
         if p7recordID==rec_Coordinate_Axis_Details:
             expected_field5 = p7recordID[4].format(AxisNumber=safe_cast_to_int(row,6))               # put the axis number in the string
         # Special case: string substitute ATTREF (lookup name in dict using field 5)
-        elif p7recordID==rec_File_Contents_Attribute:
-            try:    expected_field5 = p7recordID[4].format(AttRefName=ATTREF[int(row[5])])           # substitute string using ATTREF dict
-            except: expected_field5 = p7recordID[4].format(AttRefName=row[4])                        # in case user defined: not in lookup table
+        #elif p7recordID==rec_File_Contents_Attribute:
+        #    try:    expected_field5 = p7recordID[4].format(AttRefName=ATTREF[int(row[5])])           # substitute string using ATTREF dict
+        #    except: expected_field5 = p7recordID[4].format(AttRefName=row[4])                        # in case user defined: not in lookup table
         # Special case: string substitute ATTREF (lookup name in dict using field 5)
-        elif p7recordID==rec_Measurement_Tool_Attributes:
-            try:    expected_field5 = p7recordID[4].format(MtAttRefName=MTATTREF[int(row[5])])       # substitute string using MTATTREF dict
-            except: expected_field5 = p7recordID[4].format(MtAttRefName=row[4])                      # in case user defined: not in lookup table
+        #elif p7recordID==rec_Measurement_Tool_Attributes:
+        #    try:    expected_field5 = p7recordID[4].format(MtAttRefName=MTATTREF[int(row[5])])       # substitute string using MTATTREF dict
+        #    except: expected_field5 = p7recordID[4].format(MtAttRefName=row[4])                      # in case user defined: not in lookup table
         # Special case: string substitute WOBJATTREF (lookup name in dict).  Use field 8 for lookup.  Could also use field 9 for text.
-        elif p7recordID==rec_Well_Object_Attributes:
+        elif p7recordID==rec_Position_Object_Attribute:
             try:    expected_field5 = p7recordID[4].format(WobjAttRefName=WOBJATTREF[int(row[7])])   # substitute string using WOBJATTREF dict
             except: expected_field5 = p7recordID[4].format(WobjAttRefName=row[4])                    # in case user defined: not in lookup table
         ### Compare text from file with expected_field5 description
@@ -702,9 +682,9 @@ def check_record_vs_spec(row, p7recordID):
         if num_extension_fields>0:
             num_fields_expected += (num_extension_fields-1) # NB. one extension field is there - silly definition
 
-    # POSLOG def extension fields
-    if p7recordID==rec_Position_Log_Type_Definition:
-        logging.debug("rec_Position_Log_Type_Definition may have extension fields")
+    # P7 def extension fields
+    if p7recordID==rec_P7_Table_Definition:
+        logging.debug("rec_P7_Table_Definition may have extension fields")
         num_extension_fields = safe_cast_to_int(row, 15)
         if num_extension_fields>0:
             num_fields_expected += (num_extension_fields-1) # NB. one extension field is there - silly definition

@@ -1,0 +1,72 @@
+IOGP,User Guide Example A,7,1.0,1,2018:08:30,14:42:26, P717 User Guide example A.p717, P7 task force
+
+==============================================================================================
+** IOGP P7 User Guide Example A
+** Created by User Guide group on 2018-10-19
+** Based on test dataset Input file: "Alpha 01 BIG RIG WIRELINE GYRO CONTINUOUS.PDF"
+** The DF is used as ZDP, 26 ft above GL, which is at 2600 ftUS above the VRS (total 2626)
+==============================================================================================
+
+CC,0,0,0,  ----------------------------------------------
+CC,0,0,0,  Implicit CRS/CT Identification
+CC,0,0,0,  ----------------------------------------------
+HC,1,3,0,CRS Number/EPSG Code/Name/Source                  ,1, 4267, NAD27,                       9.5,2018:09:06,EPSG, 
+HC,1,3,0,CRS Number/EPSG Code/Name/Source                  ,2,32039, NAD27 / Texas South Central, 9.5,2018:09:06,EPSG,
+HC,1,3,0,CRS Number/EPSG Code/Name/Source                  ,3, 6358, NAVD88 depth (ftUS),         9.5,2018:09:06,EPSG, 
+HC,1,3,0,CRS Number/EPSG Code/Name/Source                  ,4, 4326, WGS 84,                      9.5,2018:09:06,EPSG, 
+HC,1,6,1,Coordinate System Axis 1                          ,2,1,, Northing, north, N,  6,ftUS
+HC,1,6,1,Coordinate System Axis 2                          ,2,2,, Easting,  east,  E,  6,ftUS
+HC,1,6,1,Coordinate System Axis 1                          ,3,1,, Depth,    down,  D,  6,ftUS
+HC,1,6,2,Coordinate Axis Conversion Applied                ,2,15498,  axis order change (2D),9843,Axis Order Reversal (2D)
+HC,1,7,0,Transformation Number/EPSG Code/Name/Source       ,1,15851, NAD27 to WGS 84 (79),        9.5,2018:09:06,EPSG,
+
+CC,0,0,0,  ----------------------------------------------
+CC,0,0,0,  File Definitions
+CC,0,0,0,  ----------------------------------------------
+
+H7,1,0,0,Project Information                               ,BETA FIELD,BETA FIELD,Texas,United States,USA
+H7,1,1,0,Structure Definition                              ,1,DELTA SITE,SRP,1,,Onshore
+H7,1,1,1,Structure Details                                 ,1,Ground Level,2600.0,,,,,
+H7,1,2,0,Well Definition                                   ,1,1,WRP,2,4220112345,ALPHA 01,TRC,,,,As-built,SEC 20 TWP 30S R40E,2018:02:05
+H7,1,2,1,Well Details                                      ,1,conductor,as-built plat,,13.1875,8,,
+H7,1,3,0,Wellbore Definition                               ,1,1,422011234500,WB00,TRC,,,,Actual,,
+H7,1,4,0,ZDP Rig/Workover Definition                       ,1,Unknown Rig,DF,2626.00,,26.00,2018:01:01,1,1
+H7,1,5,0,Survey Definition                                 ,1,1,1,WIRELINE GYRO CONTINUOUS,Gyro,,,,,50.00,10950.00,ft,2018:02:05,,ST=N,,,
+H7,1,5,1,Survey Details                                    ,1,5,2,MD-Wireline, 1,Indicated depth,1,9,AZ_GRID,4,Calculated from AZ_TRUE,1,1.780,0,,,,
+H7,1,5,2,Operator/Survey Contractor                        ,1,IOGP Exploration,Unknown Contractor,Unknown Job Number
+
+CC,0,0,0,  ----------------------------------------------
+CC,0,0,0,  Position Objects
+CC,0,0,0,  ----------------------------------------------
+H7,4,0,0,Position Object Definition                        ,1,DELTA SITE,    1,Structure Reference Point,,,,,,,,
+O7,0,1,SRP, DELTA SITE,   718541.26, 3151622.18, -2600.00, 29.7604000,-95.3698000, 29.7606281,-95.3700161,2.0,
+
+H7,4,0,0,Position Object Definition                        ,2,Slot Delta_9,  2,Well Reference Point,     on Wellpad,,,,,,,
+O7,0,2,WRP, Slot Delta_9, 718535.81, 3151657.82, -2600.00, 29.7603820,-95.3696883, 29.7606101,-95.3699043,2.0,
+
+CC,0,0,0,  ----------------------------------------------
+CC,0,0,0,  The P7 Table
+CC,0,0,0,  ----------------------------------------------
+H7,5,0,0,P7 Table Definition                               ,1,Definitive,1,Minimum Curvature,1077,GNL,0,,0,0,
+
+CC,0,0,0,-,----------,--,-,-,-----,-------,----,------,,,,,,,,,
+CC,0,0,0,,,,,,,,Type,,Status,MD,INC,AZ_GRID,,,,,,,,,
+CC,0,0,0,,,,,,,,,,,          ft,deg,deg,,,,,,,,,
+CC,0,0,0,-,----------,--,-,-,-----,-------,----,------,,,,,,,,,
+P7,0,1,1,,, ,ZDP,9,Other,        0.00,  0.000,   0.000, ,,,,,,,,
+P7,0,1,1,,,2,WRP,9,Other,       26.00,  0.000,   0.005, ,,,,,,,,
+P7,0,1,1,,, ,  D,1,Surveyed,    50.00,  0.281,   4.800, ,,,,,,,,
+P7,0,1,1,,, ,  D,1,Surveyed,    75.00,  0.472,   4.596, ,,,,,,,,
+P7,0,1,1,,, ,  D,1,Surveyed,   100.00,  0.526,   4.183, ,,,,,,,,
+P7,0,1,1,,, ,  D,1,Surveyed,   125.00,  0.579,   3.847, ,,,,,,,,
+P7,0,1,1,,, ,  D,1,Surveyed,   150.00,  0.632,   3.567, ,,,,,,,,
+P7,0,1,1,,, ,  D,1,Surveyed,   175.00,  0.701,   1.336, ,,,,,,,,
+...
+P7,0,1,1,,, ,  D,1,Surveyed, 10850.04, 45.662, 229.134, ,,,,,,,,
+P7,0,1,1,,, ,  D,1,Surveyed, 10875.04, 48.697, 228.432, ,,,,,,,,
+P7,0,1,1,,, ,  D,1,Surveyed, 10900.04, 51.830, 228.287, ,,,,,,,,
+P7,0,1,1,,, ,  D,1,Surveyed, 10925.04, 55.016, 228.112, ,,,,,,,,
+P7,0,1,1,,, ,  D,1,Surveyed, 10950.04, 58.301, 227.351, ,,,,,,,,
+P7,0,1,1,,, ,BHL,6,Projected,10991.00, 58.301, 227.351, ,,,,,,,,
+
+CC,0,0,0,   -- end of file --
