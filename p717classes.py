@@ -4,12 +4,12 @@
 ### Defines classes for main entities (REFs) in p717 file format.
 ###    CRS          : Coordinate Reference System
 ###    CT           : Coordinate Transformation
-###    WOBJ         : Well Object (a specific position)
+###    WOBJ         : Well Position Object
 ###    PROJECT      : Metadata about the project
 ###    STRUCTURE    : The site or structure the well is on
-###    WELL         : The point where the wellbore enters the earth.  WRP(E,N)
+###    WELL         : The point where the wellbore enters the earth.
 ###    WELLBORE     : Starting at Well, into the earth.
-###    RIG          : ZDP definition for the Rig used to drill.  ZDP(H)
+###    RIG          : ZDP definition for the Rig used to drill.
 ###    SURVEY       : The borehole survey info and observables.  Contains most information.
 ###    P7TABLE      : The survey(s) and calculated values. Considered the main object but requires above entities.
 ###
@@ -17,22 +17,21 @@
 ###    MTREF
 ###    GRAVREF
 ###    MAGREF
-###    STEMREF counters.  These are currently simply put in a dict in the reader (TODO later).
+###    STEMREF counters.  These are currently simply put in a dict in the reader.
 ###
 ### This file is to be included in main program such as p717 reader/writer.
 ### It requires a logger to be initialized in the calling program before using the program (see sample reader program).
 ###
-### v1: Based on draft v0.99c 2019-06-22 of IOGP p717 format specification.
+### v1: Based on draft v1 2019-11-05 of IOGP p717 format specification.
 ### See spec and user guide on www.iogp.org.
 ###
-### Not all fields are parsed or checked.
-### This code is sample code, provided AS-IS with no warranty for fitness or purpose whatsoever.
-### Do with it whatever you want, but make sure to check.
+### This code is sample code, provided AS-IS with no warranty or guarantee for fitness or purpose whatsoever.
+### Do with it whatever you want, but do not assume it to be correct.
 ###
-### Bert Kampes, 2018-08-10
+### Bert Kampes, 2019-11-05
 #########################################################################################
 
-import datetime  # IOGP record current time
+import datetime  # for IOGP record current time
 import logging
 ### Get p717 record definitions from an include file by using import * (no namespace)
 #from p717records import dict_record_spec, dictCRSTYPEREF, dictUNITREF, dictWOBSID, dictWOBJTYPEID, safe_cast_to_int, safe_cast_to_float
@@ -60,8 +59,7 @@ from p717records import *
 ###   * So this is about geodetic definitions.  We use implicit definitions (EPSG codes) - careful with axes orientation and order!
 ################################################################################
 
-#class UoM: not defined for this test program.  The implicit defined units should be fine for all purposes.
-
+#none
 
 ####################################################################
 ### COORDINATE REFERENCE SYSTEM
@@ -856,9 +854,6 @@ class WELL:
         self.platform_east_offset  = safe_cast_to_float(row,11)
         self.platform_north_offset = safe_cast_to_float(row,12)
 
-    ### Add information from Well Positioning record
-    def set_rec_Positioning_Contractor(self, row):
-        self.positioning_company = row[7].strip()
 
     ### Record writers - requires a file handler to an open ascii file
     def write_rec_Well_Definition(self, outfh):
@@ -962,7 +957,7 @@ class WELLBORE:
 
 ####################################################################
 ### RIG - part of SURVEY and connected to STRUCTURE
-### contains ZDP(H)
+### contains ZDP
 ###
 ### Bert Kampes, 2018-08-10
 ####################################################################
@@ -973,7 +968,7 @@ class RIG:
 
         ### Create a dummy row if none is passed to fill/construct
         if row is None:
-            row  = "H7,1,4,0,ZDP Rig/Workover Definition,1,Unknown Rig,KB,275.5,0.5, 8.35, 2011:01:01,0,1".split(",")
+            row  = "H7,1,4,0,Rig/Workover ZDP Definition,,1,Rig A,ZDP,3,1,Derrick Floor,1,1".split(",")
 
         logging.debug("RIG CONSTRUCTOR: %s", row[:5])
         self.row               = row.copy()
@@ -984,31 +979,37 @@ class RIG:
         # self.md_structure_level  = None # optional field? not same as above if slanted.  (seems better case "slanted rig" Y/N
 
         ### Parse row
-        self.ZDPREF                    = safe_cast_to_int(row,5)
+        self.RIGREF                    = safe_cast_to_int(row,5)
         self.rig_name                  = row[6].strip()
-        self.ZDP_type                  = row[7].strip() # e.g., 'KB'
-        self.ZDP_elevation             = safe_cast_to_float(row,8) # e.g., 102.1m above MSL - critical field!
-        self.ZDP_elevation_uncertainty = safe_cast_to_float(row,9) # e.g., 102.1m above MSL - critical field!
-        self.tvd_structure_level       = safe_cast_to_float(row,10) # above platform or GL
-        self.ZDP_date                  = row[11].strip()
-        self.rig_type                  = row[12].strip()
-        self.rig_slant_type            = row[13].strip()
+        self.ZDPabbreviation           = row[7].strip() # must be 'ZDP'
+        self.ZDPREF                    = safe_cast_to_int(row,8)
+        self.ZDP_typecode              = safe_cast_to_int(row,9) # e.g., code for 'KB'
+        self.ZDP_type                  = row[10].strip() # e.g., 'KB'
+        #self.ZDP_elevation             = safe_cast_to_float(row,8) # e.g., 102.1m above MSL - critical field!
+        #self.ZDP_elevation_uncertainty = safe_cast_to_float(row,9) # e.g., 102.1m above MSL - critical field!
+        #self.tvd_structure_level       = safe_cast_to_float(row,10) # above platform or GL
+        #self.ZDP_date                  = row[11].strip()
+        self.rig_type                  = row[11].strip()
+        self.rig_slant_type            = row[12].strip()
 
 
     ### Record writers - requires a file handler to an open ascii file
     def write_rec_Rig_Definition(self, outfh):
         rec_fmt = dict_record_spec[rec_Rig_Definition][1][2].replace("BLANK",'')
         f1,f2,f3,f4,f5 = rec_Rig_Definition
-        f6  = self.ZDPREF
+        f6  = self.RIGREF
         f7  = self.rig_name
-        f8  = self.ZDP_type
-        f9  = self.ZDP_elevation
-        f10 = self.ZDP_elevation_uncertainty
-        f11 = self.tvd_structure_level          # "rig height"
-        f12 = self.ZDP_date
-        f13 = self.rig_type
-        f14 = self.rig_slant_type
-        outfh.write(rec_fmt.format(f1,f2,f3,f4,f5, f6,f7,f8,f9,f10,f11,f12,f13,f14))
+        f8  = 'ZDP' #mandatory abbreviation
+        f9  = self.ZDPREF
+        f10  = self.ZDP_typecode
+        f11  = self.ZDP_type
+        #f9  = self.ZDP_elevation
+        #f10 = self.ZDP_elevation_uncertainty
+        #f11 = self.tvd_structure_level          # "rig height"
+        #f12 = self.ZDP_date
+        f12 = self.rig_type
+        f13 = self.rig_slant_type
+        outfh.write(rec_fmt.format(f1,f2,f3,f4,f5, f6,f7,f8,f9,f10,f11,f12,f13))
         outfh.write("\n")
 
 

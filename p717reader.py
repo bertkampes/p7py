@@ -1,7 +1,7 @@
 #!python3
 #
 #########################################################################################
-### p717reader.py (python3)
+### p717reader.py
 ###
 ### Demo program to parse the IOGP p717 wellbore survey data exchange format, used during development of the format.
 ###
@@ -65,6 +65,7 @@ def usage():
 ### compile into executable for distribution or bat file to drag files into or interactive
 
 inputfile     = 'data1.csv'
+inputfile     = 'P717 User Guide example A.20191105.p717'
 num_arguments = len(sys.argv)-1
 if num_arguments!=1: usage()
 
@@ -421,15 +422,6 @@ for row in reader:
     
     ### Structure
     elif is_record(row, rec_Structure_Definition):      True # Already dealt with in first pass to construct STRUCTURE object
-    ### Structure Details
-    elif is_record(row, rec_Structure_Details):
-        key = safe_cast_to_int(row,5)
-        logging.debug("Found Structure details for Structure:     %s", key)
-        #if key>=0: dictSTRUCTURE[key].set_rec_Structure_Details(row)
-        if key in dictSTRUCTURE: 
-            dictSTRUCTURE[key].set_rec_Structure_Details(row)
-        else:
-            logging.error("STRUCTUREREF not found: %i", key)
 
     ### Well
     elif is_record(row, rec_Well_Definition): True # Already dealt with during first pass to construct WELL object
@@ -442,10 +434,6 @@ for row in reader:
             dictWELL[key].set_rec_Well_Details(row)
         else:
             logging.error("WELLREF not found: %i", key)
-    ### Positioning contractor
-    elif is_record(row, rec_Positioning_Contractor):
-        key = safe_cast_to_int(row,6)
-        if key>=0: dictWELL[key].set_rec_Positioning_Contractor(row)
 
     ### Wellbore
     elif is_record(row, rec_Wellbore_Definition): True     # Already dealt with in first pass to construct WELLBORE object
@@ -663,8 +651,8 @@ for SURVEYREF in dictSURVEY:
     #zdpe_unit = dictUNITREF[Survey.Rig.ZDP_UNITREF] #.unit_name # unit for the ZDP elevation relative to the permanent datum
     zdpe_unit = Project.projectCRS_vert_unit
     outfh.write("RIG/WORKOVER:              {}\n".format(Survey.Rig.rig_name))
-    outfh.write("TVD Reference (ZDP):       {} {} ({}) above VRS\n".format(Survey.Rig.ZDP_type, Survey.Rig.ZDP_elevation, zdpe_unit)) # same point by definition in p717
-    outfh.write("MD Reference (ZDP):        {} {} ({}) above VRS\n".format(Survey.Rig.ZDP_type, Survey.Rig.ZDP_elevation, zdpe_unit)) # same point by definition in p717
+    #outfh.write("TVD Reference (ZDP):       {} {} ({}) above VRS\n".format(Survey.Rig.ZDP_type, Survey.Rig.ZDP_elevation, zdpe_unit)) # same point by definition in p717
+    #outfh.write("MD Reference (ZDP):        {} {} ({}) above VRS\n".format(Survey.Rig.ZDP_type, Survey.Rig.ZDP_elevation, zdpe_unit)) # same point by definition in p717
     outfh.write("North Reference:           {}\n".format(Survey.AZ_type_name))
     outfh.write("\n")
 
